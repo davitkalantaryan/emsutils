@@ -148,7 +148,7 @@ typename Base<KeyType,DataType>::iterator Base<KeyType,DataType>::AddEntryWithKn
 
 template <typename KeyType,typename DataType>
 typename Base<KeyType,DataType>::iterator Base<KeyType,DataType>::FindEntry(const KeyType& a_key,size_t* a_hashPtr,
-																			 void* a_clbkData,typename Funcs<KeyType,DataType>::Find a_fnc)
+																			typename Funcs<KeyType,DataType>::Find a_fnc, void* a_clbkData)
 {
 	__private::common::HashItemFull<KeyType,DataType>* pItemToRet;
 	size_t unHashForNull;
@@ -207,6 +207,13 @@ Base<KeyType,DataType>::HashItem::~HashItem()
 }
 
 /*//////////////////////////////////////////////////////////////////////////////////////////////////////*/
+
+template <typename KeyType,typename DataType>
+Base<KeyType,DataType>::iterator::iterator()
+	:
+	  m_pItem(CPPUTILS_NULL)
+{
+}
 
 template <typename KeyType,typename DataType>
 Base<KeyType,DataType>::iterator::iterator(HashItem* a_pItem)
@@ -381,6 +388,13 @@ Base<KeyType,void>::HashItem::~HashItem()
 }
 
 /*//////////////////////////////////////////////////////////////////////////////////////////////////////*/
+
+template <typename KeyType>
+Base<KeyType,void>::iterator::iterator()
+	:
+	  m_pItem(CPPUTILS_NULL)
+{
+}
 
 template <typename KeyType>
 Base<KeyType,void>::iterator::iterator(HashItem* a_pItem)

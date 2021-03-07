@@ -57,7 +57,7 @@ public:
 	iterator	AddOrReplaceEntry(const KeyType& key, const DataType& data);
 	iterator	AddEntryWithKnownHash(const KeyType& key,const DataType& a_data, size_t a_hashVal);
 	iterator	FindEntry(const KeyType& key,size_t* corespondingHash=CPPUTILS_NULL,
-						  void*clbkData=CPPUTILS_NULL,typename Funcs<KeyType,DataType>::Find a_fnc=&Funcs<KeyType,DataType>::DefaultFind);
+						  typename Funcs<KeyType,DataType>::Find a_fnc=&Funcs<KeyType,DataType>::DefaultFind, void*clbkData=CPPUTILS_NULL);
     bool		RemoveEntry(const KeyType& key);
 	void		RemoveEntry(iterator entry);
 
@@ -79,6 +79,7 @@ public:
 	
 	class iterator{
 	public:
+		iterator();
 		iterator& operator++();
 		iterator& operator++(int);
 		HashItem* operator->();
@@ -136,6 +137,7 @@ public:
 	
 	class iterator{
 	public:
+		iterator();
 		iterator& operator++();
 		iterator& operator++(int);
 		HashItem* operator->();
