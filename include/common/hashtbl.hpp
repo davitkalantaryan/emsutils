@@ -16,7 +16,7 @@
 #else
 #endif
 
-#define DEFAULT_TABLE_SIZE	64
+#define DEFAULT_TABLE_SIZE	1024
 
 namespace common { namespace hashtbl {
 
@@ -60,12 +60,15 @@ public:
 						  typename Funcs<KeyType,DataType>::Find a_fnc=&Funcs<KeyType,DataType>::DefaultFind, void*clbkData=CPPUTILS_NULL);
     bool		RemoveEntry(const KeyType& key);
 	void		RemoveEntry(iterator entry);
+	
+	size_t		size()const;
 
 protected:
 	const typename Funcs<KeyType,DataType>::Hash	m_funcHash;
 	HashItem**		m_pTable;
 	size_t			m_unRoundedTableSizeMin1;
 	HashItem*		m_pFirstItem;
+	size_t			m_unSize;
 	
 public:
 	struct HashItem {
@@ -118,12 +121,15 @@ public:
 						  void*clbkData=CPPUTILS_NULL,typename Funcs<KeyType>::FindVoid a_fnc=&Funcs<KeyType>::DefaultFindVoid);
     bool		RemoveEntry(const KeyType& key);
 	void		RemoveEntry(iterator entry);
+	
+	size_t		size()const;
 
 protected:
 	const typename Funcs<KeyType>::Hash	m_funcHash;
 	HashItem**		m_pTable;
 	size_t			m_unRoundedTableSizeMin1;
 	HashItem*		m_pFirstItem;
+	size_t			m_unSize;
 	
 public:
 	struct HashItem {

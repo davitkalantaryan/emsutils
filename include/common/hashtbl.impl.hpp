@@ -60,7 +60,8 @@ template <typename KeyType,typename DataType>
 Base<KeyType,DataType>::Base(size_t a_tInitSize, typename Funcs<KeyType,DataType>::Hash a_funcHash)
 	:
 	  m_funcHash(a_funcHash),
-	  m_pFirstItem(CPPUTILS_NULL)
+	  m_pFirstItem(CPPUTILS_NULL),
+	  m_unSize(0)
 {
 	size_t i(0);
 	size_t tRet(a_tInitSize);
@@ -142,6 +143,8 @@ typename Base<KeyType,DataType>::iterator Base<KeyType,DataType>::AddEntryWithKn
 	if(m_pFirstItem){pItem->nextInTheList->prevInTheList=pItem;}
 	m_pFirstItem = pItem;
 	
+	++m_unSize;
+	
 	return pItem;
 }
 
@@ -189,6 +192,13 @@ void Base<KeyType,DataType>::RemoveEntry(Base<KeyType,DataType>::iterator a_entr
 	if(m_pTable[pItem->hashValue]==pItem){m_pTable[pItem->hashValue]=pItem->next;}
 	if(m_pFirstItem==pItem){m_pFirstItem=pItem->nextInTheList;}
 	delete pItem; // destructor will delete from list
+	--m_unSize;
+}
+
+template <typename KeyType,typename DataType>
+size_t Base<KeyType,DataType>::size()const
+{
+	return m_unSize;
 }
 
 /*//////////////////////////////////////////////////////////////////////////////////////////////////////*/
@@ -261,7 +271,8 @@ template <typename KeyType>
 Base<KeyType,void>::Base(size_t a_tInitSize, typename Funcs<KeyType>::Hash a_funcHash)
 	:
 	  m_funcHash(a_funcHash),
-	  m_pFirstItem(CPPUTILS_NULL)
+	  m_pFirstItem(CPPUTILS_NULL),
+	  m_unSize(0)
 {
 	size_t i(0);
 	size_t tRet(a_tInitSize);
@@ -323,6 +334,7 @@ typename Base<KeyType,void>::iterator Base<KeyType,void>::AddEntryWithKnownHash(
 	pItem->nextInTheList = static_cast<__private::common::HashItemFull<KeyType,void>*>(m_pFirstItem);
 	if(m_pFirstItem){pItem->nextInTheList->prevInTheList=pItem;}
 	m_pFirstItem = pItem;
+	++m_unSize;
 	
 	return pItem;
 }
@@ -350,7 +362,6 @@ typename Base<KeyType,void>::iterator Base<KeyType,void>::FindEntry(const KeyTyp
 }
 
 
-
 template <typename KeyType>
 bool Base<KeyType,void>::RemoveEntry(const KeyType& a_key)
 {
@@ -371,6 +382,13 @@ void Base<KeyType,void>::RemoveEntry(Base<KeyType,void>::iterator a_entry)
 	if(m_pTable[pItem->hashValue]==pItem){m_pTable[pItem->hashValue]=pItem->next;}
 	if(m_pFirstItem==pItem){m_pFirstItem=pItem->nextInTheList;}
 	delete pItem; // destructor will delete from list
+	++m_unSize;
+}
+
+template <typename KeyType>
+size_t Base<KeyType,void>::size()const
+{
+	return m_unSize;
 }
 
 /*//////////////////////////////////////////////////////////////////////////////////////////////////////*/
