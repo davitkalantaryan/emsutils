@@ -30,3 +30,12 @@
 *.exe
 *.out
 *.app
+
+
+/workspaces/*/*
+!/workspaces/*_qt/*.pro
+!/workspaces/*_qt/*.pri
+
+/prj/*/*/*
+!/prj/*/*_qt/*.pro
+!/prj/*/*_qt/*.pri
