@@ -86,7 +86,7 @@ public:
 		iterator& operator++();
 		iterator& operator++(int);
 		HashItem* operator->();
-		operator HashItem*();
+		operator HashItem*()const;
 		
 	private:
 		friend class Base;
@@ -99,7 +99,14 @@ public:
 struct VoidPtrKey{
 	const void*	key;
 	size_t		keyLen;
+	
+	VoidPtrKey(const void* key, size_t keyLen,bool shouldDelete=true);
+	VoidPtrKey(const VoidPtrKey& cM);
+	VoidPtrKey(VoidPtrKey&& cM,bool shouldDelete=true);
+	~VoidPtrKey();
 	bool operator==(const VoidPtrKey& aM)const;
+private:
+	const bool m_shouldDFree;
 };
 
 

@@ -11,6 +11,12 @@
 #include <string.h>
 #include <stdint.h>
 
+namespace __private { namespace common {
+
+CPPUTILS_EXPORT const void* GenerateDataBasedOnData(const void* a_data, size_t a_dataSize);
+
+}}  // namespace __private { namespace common {
+
 /* The mixing step */
 #define mix2(a,b,c) \
 { \
@@ -27,6 +33,37 @@
 
 
 namespace common { namespace hashtbl {
+
+VoidPtrKey::VoidPtrKey(const void* a_key, size_t a_keyLen,bool a_shouldDelete)
+	:
+	  key(a_shouldDelete?__private::common::GenerateDataBasedOnData(a_key,a_keyLen):a_key),
+	  keyLen(a_keyLen),
+	  m_shouldDFree(a_shouldDelete)
+{
+}
+
+VoidPtrKey::VoidPtrKey(const VoidPtrKey& a_cM)
+	:
+	  key(__private::common::GenerateDataBasedOnData(a_cM.key,a_cM.keyLen)),
+	  keyLen(a_cM.keyLen),
+	  m_shouldDFree(true)
+{
+}
+
+VoidPtrKey::VoidPtrKey(VoidPtrKey&& a_cM,bool a_shouldDelete)
+	:
+	  key(a_shouldDelete?__private::common::GenerateDataBasedOnData(a_cM.key,a_cM.keyLen):a_cM.key),
+	  keyLen(a_cM.keyLen),
+	  m_shouldDFree(a_shouldDelete)
+{
+}
+
+VoidPtrKey::~VoidPtrKey()
+{
+	if(m_shouldDFree){
+		free(const_cast<void*>(this->key));
+	}
+}
 
 bool VoidPtrKey::operator==(const VoidPtrKey &a_aM) const
 {

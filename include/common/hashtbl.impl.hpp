@@ -255,10 +255,28 @@ typename Base<KeyType,DataType>::HashItem* Base<KeyType,DataType>::iterator::ope
 }
 
 template <typename KeyType,typename DataType>
-Base<KeyType,DataType>::iterator::operator Base<KeyType,DataType>::HashItem*()
+Base<KeyType,DataType>::iterator::operator Base<KeyType,DataType>::HashItem*()const
 {
 	return m_pItem;
 }
+
+//template <typename KeyType,typename DataType>
+//Base<KeyType,DataType>::iterator::operator bool()const
+//{
+//	return m_pItem?true:false;
+//}
+//
+//template <typename KeyType,typename DataType>
+//bool Base<KeyType,DataType>::iterator::operator==(const iterator& a_aM)const
+//{
+//	return m_pItem == a_aM.m_pItem;
+//}
+//
+//template <typename KeyType,typename DataType>
+//bool Base<KeyType,DataType>::iterator::operator!=(const iterator& a_aM)const
+//{
+//	return m_pItem != a_aM.m_pItem;
+//}
 
 
 /*//////////////////////////////////////////////////////////////////////////////////////////////////////*/
