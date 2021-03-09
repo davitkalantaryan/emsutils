@@ -20,14 +20,9 @@
 
 namespace common { namespace hashtbl {
 
-
-template <typename KeyType,typename DataType=int>
-class Funcs
+template <typename KeyType, typename DataType=void>
+class FuncsT
 {
-public:
-	static size_t	DefaultHash(const KeyType& key);
-	static bool		DefaultFind(void* clbkData,const KeyType& key, const DataType& data);
-	static bool		DefaultFindVoid(void* clbkData,const KeyType& key);
 public:
 #ifdef CPPUTILS_CPP_11_DEFINED
 	typedef std::function<size_t(const KeyType& key)> Hash;
@@ -41,6 +36,37 @@ public:
 };
 
 
+template <typename KeyType, typename DataType=void>
+class Funcs 
+{
+public:
+	static size_t	DefaultHash(const KeyType& key);
+	static bool		DefaultFind(void* clbkData,const KeyType& key, const DataType& data);
+	static bool		DefaultFindVoid(void* clbkData,const KeyType& key);
+};
+
+struct VoidPtrKey{
+	const void*	key;
+	size_t		keyLen;
+	
+	VoidPtrKey(const void* key, size_t keyLen,bool shouldDelete=true);
+	VoidPtrKey(const VoidPtrKey& cM);
+	VoidPtrKey(VoidPtrKey&& cM,bool shouldDelete=true);
+	~VoidPtrKey();
+	bool operator==(const VoidPtrKey& aM)const;
+private:
+	const bool m_shouldDFree;
+};
+
+template <typename DataType>
+class Funcs<VoidPtrKey,DataType>
+{
+public:
+	static size_t	DefaultHash(const VoidPtrKey& key);
+	static bool		DefaultFind(void* clbkData,const VoidPtrKey& key, const DataType& data);
+};
+
+
 template <typename KeyType,typename DataType>
 class Base
 {
@@ -49,7 +75,7 @@ public:
 	class  iterator;
 public:
 	
-	Base(size_t tableSize= DEFAULT_TABLE_SIZE, typename Funcs<KeyType,DataType>::Hash a_funcHash=&Funcs<KeyType,DataType>::DefaultHash);
+	Base(size_t tableSize= DEFAULT_TABLE_SIZE, typename FuncsT<KeyType,DataType>::Hash a_funcHash=&Funcs<KeyType,DataType>::DefaultHash);
 	virtual ~Base();
 
 	iterator	AddEntryEvenIfExists(const KeyType& key, const DataType& data);
@@ -57,14 +83,15 @@ public:
 	iterator	AddOrReplaceEntry(const KeyType& key, const DataType& data);
 	iterator	AddEntryWithKnownHash(const KeyType& key,const DataType& a_data, size_t a_hashVal);
 	iterator	FindEntry(const KeyType& key,size_t* corespondingHash=CPPUTILS_NULL,
-						  typename Funcs<KeyType,DataType>::Find a_fnc=&Funcs<KeyType,DataType>::DefaultFind, void*clbkData=CPPUTILS_NULL);
+						  typename FuncsT<KeyType,DataType>::Find a_fnc=&Funcs<KeyType,DataType>::DefaultFind, void*clbkData=CPPUTILS_NULL)const;
     bool		RemoveEntry(const KeyType& key);
 	void		RemoveEntry(iterator entry);
 	
 	size_t		size()const;
+	iterator	begin();
 
 protected:
-	const typename Funcs<KeyType,DataType>::Hash	m_funcHash;
+	const typename FuncsT<KeyType,DataType>::Hash	m_funcHash;
 	HashItem**		m_pTable;
 	size_t			m_unRoundedTableSizeMin1;
 	HashItem*		m_pFirstItem;
@@ -85,6 +112,8 @@ public:
 		iterator();
 		iterator& operator++();
 		iterator& operator++(int);
+		iterator& operator--();
+		iterator& operator--(int);
 		HashItem* operator->();
 		operator HashItem*()const;
 		
@@ -94,21 +123,6 @@ public:
 		HashItem* m_pItem;
 	}static const s_endIter;
 };
-
-
-struct VoidPtrKey{
-	const void*	key;
-	size_t		keyLen;
-	
-	VoidPtrKey(const void* key, size_t keyLen,bool shouldDelete=true);
-	VoidPtrKey(const VoidPtrKey& cM);
-	VoidPtrKey(VoidPtrKey&& cM,bool shouldDelete=true);
-	~VoidPtrKey();
-	bool operator==(const VoidPtrKey& aM)const;
-private:
-	const bool m_shouldDFree;
-};
-
 
 
 template <typename KeyType>

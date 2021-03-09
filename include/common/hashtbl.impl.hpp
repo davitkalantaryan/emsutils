@@ -57,7 +57,7 @@ const typename Base<KeyType,DataType>::iterator  Base<KeyType,DataType>::s_endIt
 
 
 template <typename KeyType,typename DataType>
-Base<KeyType,DataType>::Base(size_t a_tInitSize, typename Funcs<KeyType,DataType>::Hash a_funcHash)
+Base<KeyType,DataType>::Base(size_t a_tInitSize, typename FuncsT<KeyType,DataType>::Hash a_funcHash)
 	:
 	  m_funcHash(a_funcHash),
 	  m_pFirstItem(CPPUTILS_NULL),
@@ -151,7 +151,7 @@ typename Base<KeyType,DataType>::iterator Base<KeyType,DataType>::AddEntryWithKn
 
 template <typename KeyType,typename DataType>
 typename Base<KeyType,DataType>::iterator Base<KeyType,DataType>::FindEntry(const KeyType& a_key,size_t* a_hashPtr,
-																			typename Funcs<KeyType,DataType>::Find a_fnc, void* a_clbkData)
+																			typename FuncsT<KeyType,DataType>::Find a_fnc, void* a_clbkData)const
 {
 	__private::common::HashItemFull<KeyType,DataType>* pItemToRet;
 	size_t unHashForNull;
@@ -201,6 +201,12 @@ size_t Base<KeyType,DataType>::size()const
 	return m_unSize;
 }
 
+template <typename KeyType,typename DataType>
+typename Base<KeyType,DataType>::iterator Base<KeyType,DataType>::begin()
+{
+	return m_pFirstItem;
+}
+
 /*//////////////////////////////////////////////////////////////////////////////////////////////////////*/
 
 template <typename KeyType,typename DataType>
@@ -245,6 +251,22 @@ typename Base<KeyType,DataType>::iterator& Base<KeyType,DataType>::iterator::ope
 {
 	__private::common::HashItemFull<KeyType,DataType>* pItem = static_cast<__private::common::HashItemFull<KeyType,DataType>*>(m_pItem);
 	m_pItem = pItem->nextInTheList;
+	return *this;
+}
+
+template <typename KeyType,typename DataType>
+typename Base<KeyType,DataType>::iterator& Base<KeyType,DataType>::iterator::operator--()
+{
+	__private::common::HashItemFull<KeyType,DataType>* pItem = static_cast<__private::common::HashItemFull<KeyType,DataType>*>(m_pItem);
+	m_pItem = pItem->prevInTheList;
+	return *this;
+}
+
+template <typename KeyType,typename DataType>
+typename Base<KeyType,DataType>::iterator& Base<KeyType,DataType>::iterator::operator--(int)
+{
+	__private::common::HashItemFull<KeyType,DataType>* pItem = static_cast<__private::common::HashItemFull<KeyType,DataType>*>(m_pItem);
+	m_pItem = pItem->prevInTheList;
 	return *this;
 }
 
@@ -488,6 +510,20 @@ bool Funcs<KeyType,DataType>::DefaultFindVoid(void*,const KeyType&)
 	return true;
 }
 
+
+/*//////////////////////////////////////////////////////////////////////////////////////////////////////*/
+
+template <typename DataType>
+size_t Funcs<VoidPtrKey,DataType>::DefaultHash(const VoidPtrKey& a_key)
+{
+	return __private::common::hash1_(a_key.key,a_key.keyLen);
+}
+
+template <typename DataType>
+bool Funcs<VoidPtrKey,DataType>::DefaultFind(void*,const VoidPtrKey&, const DataType&)
+{
+	return true;
+}
 
 
 }}  // namespace common { namespace hashtbl {
