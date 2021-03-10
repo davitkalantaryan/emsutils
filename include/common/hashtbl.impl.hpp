@@ -185,7 +185,7 @@ bool Base<KeyType,DataType>::RemoveEntry(const KeyType& a_key)
 
 
 template <typename KeyType,typename DataType>
-void Base<KeyType,DataType>::RemoveEntry(Base<KeyType,DataType>::iterator a_entry)
+void Base<KeyType,DataType>::RemoveEntry(const Base<KeyType,DataType>::iterator a_entry)
 {
 	__private::common::HashItemFull<KeyType,DataType>* pItem = static_cast<__private::common::HashItemFull<KeyType,DataType>*>(a_entry.m_pItem);
 	

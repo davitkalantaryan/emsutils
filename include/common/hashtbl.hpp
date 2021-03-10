@@ -85,7 +85,7 @@ public:
 	iterator	FindEntry(const KeyType& key,size_t* corespondingHash=CPPUTILS_NULL,
 						  typename FuncsT<KeyType,DataType>::Find a_fnc=&Funcs<KeyType,DataType>::DefaultFind, void*clbkData=CPPUTILS_NULL)const;
     bool		RemoveEntry(const KeyType& key);
-	void		RemoveEntry(iterator entry);
+	void		RemoveEntry(const iterator entry);
 	
 	size_t		size()const;
 	iterator	begin();
