@@ -114,8 +114,10 @@ public:
 		iterator& operator++(int);
 		iterator& operator--();
 		iterator& operator--(int);
-		HashItem* operator->()const;
-		operator HashItem*()const;
+		HashItem* operator->();
+		operator HashItem*();
+		const HashItem* operator->()const;
+		operator const HashItem* ()const;
 		
 	private:
 		friend class Base;
@@ -167,8 +169,10 @@ public:
 		iterator();
 		iterator& operator++();
 		iterator& operator++(int);
-		HashItem* operator->()const;
-		operator HashItem*()const;
+		HashItem* operator->();
+		operator HashItem*();
+		const HashItem* operator->()const;
+		operator const HashItem* ()const;
 		
 	private:
 		friend class Base;

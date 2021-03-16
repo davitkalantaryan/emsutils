@@ -271,13 +271,25 @@ typename Base<KeyType,DataType>::iterator& Base<KeyType,DataType>::iterator::ope
 }
 
 template <typename KeyType,typename DataType>
-typename Base<KeyType,DataType>::HashItem* Base<KeyType,DataType>::iterator::operator->()const
+typename Base<KeyType,DataType>::HashItem* Base<KeyType,DataType>::iterator::operator->()
 {
 	return m_pItem;
 }
 
 template <typename KeyType,typename DataType>
-Base<KeyType,DataType>::iterator::operator typename Base<KeyType,DataType>::HashItem*()const
+Base<KeyType,DataType>::iterator::operator typename Base<KeyType,DataType>::HashItem*()
+{
+	return m_pItem;
+}
+
+template <typename KeyType,typename DataType>
+typename const Base<KeyType,DataType>::HashItem* Base<KeyType,DataType>::iterator::operator->()const
+{
+	return m_pItem;
+}
+
+template <typename KeyType,typename DataType>
+Base<KeyType,DataType>::iterator::operator typename const Base<KeyType,DataType>::HashItem*()const
 {
 	return m_pItem;
 }
@@ -478,13 +490,25 @@ typename Base<KeyType,void>::iterator& Base<KeyType,void>::iterator::operator++(
 }
 
 template <typename KeyType>
-typename Base<KeyType,void>::HashItem* Base<KeyType,void>::iterator::operator->()const
+typename Base<KeyType,void>::HashItem* Base<KeyType,void>::iterator::operator->()
 {
 	return m_pItem;
 }
 
 template <typename KeyType>
-Base<KeyType,void>::iterator::operator typename Base<KeyType,void>::HashItem*()const
+Base<KeyType,void>::iterator::operator typename Base<KeyType,void>::HashItem*()
+{
+	return m_pItem;
+}
+
+template <typename KeyType>
+typename const Base<KeyType,void>::HashItem* Base<KeyType,void>::iterator::operator->()const
+{
+	return m_pItem;
+}
+
+template <typename KeyType>
+Base<KeyType,void>::iterator::operator typename const Base<KeyType,void>::HashItem*()const
 {
 	return m_pItem;
 }
