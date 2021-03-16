@@ -271,7 +271,7 @@ typename Base<KeyType,DataType>::iterator& Base<KeyType,DataType>::iterator::ope
 }
 
 template <typename KeyType,typename DataType>
-typename Base<KeyType,DataType>::HashItem* Base<KeyType,DataType>::iterator::operator->()
+typename Base<KeyType,DataType>::HashItem* Base<KeyType,DataType>::iterator::operator->()const
 {
 	return m_pItem;
 }
@@ -478,13 +478,13 @@ typename Base<KeyType,void>::iterator& Base<KeyType,void>::iterator::operator++(
 }
 
 template <typename KeyType>
-typename Base<KeyType,void>::HashItem* Base<KeyType,void>::iterator::operator->()
+typename Base<KeyType,void>::HashItem* Base<KeyType,void>::iterator::operator->()const
 {
 	return m_pItem;
 }
 
 template <typename KeyType>
-Base<KeyType,void>::iterator::operator typename Base<KeyType,void>::HashItem*()
+Base<KeyType,void>::iterator::operator typename Base<KeyType,void>::HashItem*()const
 {
 	return m_pItem;
 }
