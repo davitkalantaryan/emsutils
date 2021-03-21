@@ -88,7 +88,9 @@ public:
 	iterator		FindEntry(const KeyType& key,size_t* corespondingHash=CPPUTILS_NULL,
 							  typename FuncsT<KeyType,DataType>::Find a_fnc=&Funcs<KeyType,DataType>::DefaultFind, void*clbkData=CPPUTILS_NULL)const;
     bool			RemoveEntry(const KeyType& key);
-	void			RemoveEntry(const iterator entry);
+	void			RemoveEntry(const const_iterator entry);
+	
+	DataType&		operator[]( const KeyType& key );
 	
 	size_t			size()const;
 	iterator		begin();
@@ -133,6 +135,7 @@ public:
 	class const_iterator{
 	public:
 		const_iterator();
+		const_iterator(const iterator& iter);
 		const_iterator& operator++();
 		const_iterator  operator++(int);
 		const_iterator& operator--();

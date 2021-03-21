@@ -54,6 +54,8 @@ namespace common { namespace hashtbl {
 
 template <typename KeyType,typename DataType>
 const typename Base<KeyType,DataType>::iterator  Base<KeyType,DataType>::s_endIter(CPPUTILS_NULL);
+template <typename KeyType,typename DataType>
+const typename Base<KeyType,DataType>::const_iterator  Base<KeyType,DataType>::s_endConstIter(CPPUTILS_NULL);
 
 
 template <typename KeyType,typename DataType>
@@ -182,7 +184,7 @@ bool Base<KeyType,DataType>::RemoveEntry(const KeyType& a_key)
 
 
 template <typename KeyType,typename DataType>
-void Base<KeyType,DataType>::RemoveEntry(const Base<KeyType,DataType>::iterator a_entry)
+void Base<KeyType,DataType>::RemoveEntry(const Base<KeyType,DataType>::const_iterator a_entry)
 {
 	__private::common::HashItemFull<KeyType,DataType>* pItem = static_cast<__private::common::HashItemFull<KeyType,DataType>*>(a_entry.m_pItem);
 	
@@ -191,6 +193,18 @@ void Base<KeyType,DataType>::RemoveEntry(const Base<KeyType,DataType>::iterator 
 	delete pItem; // destructor will delete from list
 	--m_unSize;
 }
+
+
+template <typename KeyType,typename DataType>
+DataType& Base<KeyType,DataType>::operator[]( const KeyType& a_key )
+{
+	size_t corespondingHash;
+	iterator iter = FindEntry(a_key,&corespondingHash);
+	if(iter){return iter->second;}
+	iter = AddEntryWithKnownHash(a_key,DataType(),corespondingHash);
+	return iter->second;
+}
+
 
 template <typename KeyType,typename DataType>
 size_t Base<KeyType,DataType>::size()const
@@ -306,6 +320,13 @@ template <typename KeyType,typename DataType>
 Base<KeyType,DataType>::const_iterator::const_iterator()
 	:
 	  m_pItem(CPPUTILS_NULL)
+{
+}
+
+template <typename KeyType,typename DataType>
+Base<KeyType,DataType>::const_iterator::const_iterator(const iterator& a_iter)
+	:
+	  m_pItem(const_cast<HashItem*>(a_iter.operator->()))
 {
 }
 
