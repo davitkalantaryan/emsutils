@@ -8,13 +8,15 @@
 #ifndef COMMON_HASHTBL_HPP
 #define COMMON_HASHTBL_HPP
 
+
 #include <cpputils_internal_header.h>
-#include <stdint.h>
-#include <stddef.h>
-#ifdef CPPUTILS_CPP_11_DEFINED
+#if defined(CPPUTILS_CPP_11_DEFINED) && !defined(DO_NOT_USE_STD_FUNCTION)
+#define STD_FUNCTION_IS_USED
 #include <functional>
 #else
 #endif
+#include <stdint.h>
+#include <stddef.h>
 
 #define DEFAULT_TABLE_SIZE	1024
 
@@ -24,14 +26,14 @@ template <typename KeyType, typename DataType=void>
 class FuncsT
 {
 public:
-#ifdef CPPUTILS_CPP_11_DEFINED
+#ifdef STD_FUNCTION_IS_USED
 	typedef std::function<size_t(const KeyType& key)> Hash;
 	typedef std::function<bool(void* clbkData,const KeyType& key, const DataType& data)> Find;
 	typedef std::function<bool(void* clbkData,const KeyType& key)> FindVoid;
 #else
 	typedef size_t (*Hash)(const KeyType& key);
 	typedef bool (*Find)(void* clbkData,const KeyType& key, const DataType& data);
-	typedef bool (*Find)(void* clbkData,const KeyType& key);
+	typedef bool (*FindVoid)(void* clbkData,const KeyType& key);
 #endif
 };
 
@@ -73,22 +75,26 @@ class Base
 public:
 	struct HashItem;
 	class  iterator;
+	class  const_iterator;
 public:
 	
 	Base(size_t tableSize= DEFAULT_TABLE_SIZE, typename FuncsT<KeyType,DataType>::Hash a_funcHash=&Funcs<KeyType,DataType>::DefaultHash);
 	virtual ~Base();
 
-	iterator	AddEntryEvenIfExists(const KeyType& key, const DataType& data);
-    iterator	AddEntry(const KeyType& key, const DataType& data);
-	iterator	AddOrReplaceEntry(const KeyType& key, const DataType& data);
-	iterator	AddEntryWithKnownHash(const KeyType& key,const DataType& a_data, size_t a_hashVal);
-	iterator	FindEntry(const KeyType& key,size_t* corespondingHash=CPPUTILS_NULL,
-						  typename FuncsT<KeyType,DataType>::Find a_fnc=&Funcs<KeyType,DataType>::DefaultFind, void*clbkData=CPPUTILS_NULL)const;
-    bool		RemoveEntry(const KeyType& key);
-	void		RemoveEntry(const iterator entry);
+	iterator		AddEntryEvenIfExists(const KeyType& key, const DataType& data);
+    iterator		AddEntry(const KeyType& key, const DataType& data);
+	iterator		AddOrReplaceEntry(const KeyType& key, const DataType& data);
+	iterator		AddEntryWithKnownHash(const KeyType& key,const DataType& a_data, size_t a_hashVal);
+	iterator		FindEntry(const KeyType& key,size_t* corespondingHash=CPPUTILS_NULL,
+							  typename FuncsT<KeyType,DataType>::Find a_fnc=&Funcs<KeyType,DataType>::DefaultFind, void*clbkData=CPPUTILS_NULL)const;
+    bool			RemoveEntry(const KeyType& key);
+	void			RemoveEntry(const iterator entry);
 	
-	size_t		size()const;
-	iterator	begin();
+	size_t			size()const;
+	iterator		begin();
+	iterator		end();
+	const_iterator	begin()const;
+	const_iterator	end()const;
 
 protected:
 	const typename FuncsT<KeyType,DataType>::Hash	m_funcHash;
@@ -104,26 +110,41 @@ public:
         HashItem(const KeyType& key, const DataType& data);
 		virtual ~HashItem();
 	public:
-		const KeyType key; DataType data;
+		//const KeyType key; DataType data;
+		const KeyType first; DataType second;
 	};
 	
 	class iterator{
 	public:
 		iterator();
 		iterator& operator++();
-		iterator& operator++(int);
+		iterator  operator++(int);
 		iterator& operator--();
-		iterator& operator--(int);
-		HashItem* operator->();
-		operator HashItem*();
-		const HashItem* operator->()const;
-		operator const HashItem* ()const;
+		iterator  operator--(int);
+		HashItem* operator->()const;
+		operator HashItem*()const;
 		
 	private:
 		friend class Base;
 		iterator(HashItem* a_pItem);
 		HashItem* m_pItem;
 	}static const s_endIter;
+	
+	class const_iterator{
+	public:
+		const_iterator();
+		const_iterator& operator++();
+		const_iterator  operator++(int);
+		const_iterator& operator--();
+		const_iterator  operator--(int);
+		const HashItem* operator->()const;
+		operator const HashItem* ()const;
+		
+	private:
+		friend class Base;
+		const_iterator(const HashItem* a_pItem);
+		HashItem* m_pItem;
+	}static const s_endConstIter;
 };
 
 

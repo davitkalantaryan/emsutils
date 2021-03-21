@@ -8,15 +8,15 @@
 #ifndef COMMON_HASHTBL_IMPL_HPP
 #define COMMON_HASHTBL_IMPL_HPP
 
-#include <stdlib.h>
-#include <memory.h>
-#include <new>
-
 
 #ifndef COMMON_HASHTBL_HPP
 //#error do not include this header directly
 #include "hashtbl.hpp"
 #endif
+
+#include <stdlib.h>
+#include <memory.h>
+#include <new>
 
 
 
@@ -69,7 +69,7 @@ Base<KeyType,DataType>::Base(size_t a_tInitSize, typename FuncsT<KeyType,DataTyp
 	if (!a_tInitSize) { tRet = DEFAULT_TABLE_SIZE; goto prepareHashTable; }
     for (; tRet; tRet = (a_tInitSize >> ++i))
         ;
-    tRet = 1 << (i - 1);
+    tRet = static_cast<size_t>(1) << static_cast<size_t>(i - 1);
 	if (tRet != a_tInitSize){tRet <<= 1;}
 
 prepareHashTable:
@@ -82,17 +82,14 @@ prepareHashTable:
 template <typename KeyType,typename DataType>
 Base<KeyType,DataType>::~Base()
 {
-	__private::common::HashItemFull<KeyType,DataType> *pItem, *pItemTmp;
-	uint32_t tRet(m_unRoundedTableSizeMin1+1);
-
-	for(uint32_t i(0); i<tRet;++i){
-		pItem = static_cast<__private::common::HashItemFull<KeyType,DataType>*>(m_pTable[i]);
-		while(pItem){
-			pItemTmp = pItem->next;
-			delete pItem;
-			pItem = pItemTmp;
-		}
+	__private::common::HashItemFull<KeyType,DataType> *pItem=static_cast<__private::common::HashItemFull<KeyType,DataType>*>(m_pFirstItem), *pItemNext;
+	
+	while(pItem){
+		pItemNext = pItem->nextInTheList;
+		delete pItem;
+		pItem = pItemNext;
 	}
+	
 	free(m_pTable);
 }
 
@@ -113,7 +110,7 @@ typename Base<KeyType,DataType>::iterator Base<KeyType,DataType>::AddOrReplaceEn
 	HashItem* pItem;
 	size_t unHash;
 	if((pItem=FindEntry(a_key,&unHash))){
-		pItem->data = a_data;
+		pItem->second = a_data;
 		return pItem; // we can overwrite
 	}
 	
@@ -161,7 +158,7 @@ typename Base<KeyType,DataType>::iterator Base<KeyType,DataType>::FindEntry(cons
 	pItemToRet = static_cast<__private::common::HashItemFull<KeyType,DataType>*>(m_pTable[unHash]);
 
 	while (pItemToRet) {
-		if((a_key==pItemToRet->key)&&a_fnc(a_clbkData,pItemToRet->key,pItemToRet->data)){
+		if((a_key==pItemToRet->first)&&a_fnc(a_clbkData,pItemToRet->first,pItemToRet->second)){
 			return pItemToRet;
 		}
 		pItemToRet = pItemToRet->next;
@@ -207,13 +204,31 @@ typename Base<KeyType,DataType>::iterator Base<KeyType,DataType>::begin()
 	return m_pFirstItem;
 }
 
+template <typename KeyType,typename DataType>
+typename Base<KeyType,DataType>::iterator Base<KeyType,DataType>::end()
+{
+	return s_endIter;
+}
+
+template <typename KeyType,typename DataType>
+typename Base<KeyType,DataType>::const_iterator Base<KeyType,DataType>::begin()const
+{
+	return m_pFirstItem;
+}
+
+template <typename KeyType,typename DataType>
+typename Base<KeyType,DataType>::const_iterator Base<KeyType,DataType>::end()const
+{
+	return s_endConstIter;
+}
+
 /*//////////////////////////////////////////////////////////////////////////////////////////////////////*/
 
 template <typename KeyType,typename DataType>
 Base<KeyType,DataType>::HashItem::HashItem(const KeyType& a_key, const DataType& a_data)
 	:
-	  key(a_key),
-	  data(a_data)
+	  first(a_key),
+	  second(a_data)
 {
 }
 
@@ -247,11 +262,12 @@ typename Base<KeyType,DataType>::iterator& Base<KeyType,DataType>::iterator::ope
 }
 
 template <typename KeyType,typename DataType>
-typename Base<KeyType,DataType>::iterator& Base<KeyType,DataType>::iterator::operator++(int)
+typename Base<KeyType,DataType>::iterator Base<KeyType,DataType>::iterator::operator++(int)
 {
 	__private::common::HashItemFull<KeyType,DataType>* pItem = static_cast<__private::common::HashItemFull<KeyType,DataType>*>(m_pItem);
+	typename Base<KeyType,DataType>::iterator iterToRet(m_pItem);
 	m_pItem = pItem->nextInTheList;
-	return *this;
+	return iterToRet;
 }
 
 template <typename KeyType,typename DataType>
@@ -263,7 +279,62 @@ typename Base<KeyType,DataType>::iterator& Base<KeyType,DataType>::iterator::ope
 }
 
 template <typename KeyType,typename DataType>
-typename Base<KeyType,DataType>::iterator& Base<KeyType,DataType>::iterator::operator--(int)
+typename Base<KeyType,DataType>::iterator Base<KeyType,DataType>::iterator::operator--(int)
+{
+	__private::common::HashItemFull<KeyType,DataType>* pItem = static_cast<__private::common::HashItemFull<KeyType,DataType>*>(m_pItem);
+	typename Base<KeyType,DataType>::iterator iterToRet(m_pItem);
+	m_pItem = pItem->prevInTheList;
+	return iterToRet;
+}
+
+template <typename KeyType,typename DataType>
+typename Base<KeyType,DataType>::HashItem* Base<KeyType,DataType>::iterator::operator->()const
+{
+	return m_pItem;
+}
+
+template <typename KeyType,typename DataType>
+Base<KeyType,DataType>::iterator::operator typename Base<KeyType,DataType>::HashItem*()const
+{
+	return m_pItem;
+}
+
+
+/*//////////////////////////////////////////////////////////////////////////////////////////////////////*/
+
+template <typename KeyType,typename DataType>
+Base<KeyType,DataType>::const_iterator::const_iterator()
+	:
+	  m_pItem(CPPUTILS_NULL)
+{
+}
+
+template <typename KeyType,typename DataType>
+Base<KeyType,DataType>::const_iterator::const_iterator(const HashItem* a_pItem)
+	:
+	  m_pItem(const_cast<HashItem*>(a_pItem))
+{
+}
+
+template <typename KeyType,typename DataType>
+typename Base<KeyType,DataType>::const_iterator& Base<KeyType,DataType>::const_iterator::operator++()
+{
+	__private::common::HashItemFull<KeyType,DataType>* pItem = static_cast<__private::common::HashItemFull<KeyType,DataType>*>(m_pItem);
+	m_pItem = pItem->nextInTheList;
+	return *this;
+}
+
+template <typename KeyType,typename DataType>
+typename Base<KeyType,DataType>::const_iterator Base<KeyType,DataType>::const_iterator::operator++(int)
+{
+	__private::common::HashItemFull<KeyType,DataType>* pItem = static_cast<__private::common::HashItemFull<KeyType,DataType>*>(m_pItem);
+	typename Base<KeyType,DataType>::iterator iterToRet(m_pItem);
+	m_pItem = pItem->nextInTheList;
+	return iterToRet;
+}
+
+template <typename KeyType,typename DataType>
+typename Base<KeyType,DataType>::const_iterator& Base<KeyType,DataType>::const_iterator::operator--()
 {
 	__private::common::HashItemFull<KeyType,DataType>* pItem = static_cast<__private::common::HashItemFull<KeyType,DataType>*>(m_pItem);
 	m_pItem = pItem->prevInTheList;
@@ -271,47 +342,25 @@ typename Base<KeyType,DataType>::iterator& Base<KeyType,DataType>::iterator::ope
 }
 
 template <typename KeyType,typename DataType>
-typename Base<KeyType,DataType>::HashItem* Base<KeyType,DataType>::iterator::operator->()
+typename Base<KeyType,DataType>::const_iterator Base<KeyType,DataType>::const_iterator::operator--(int)
+{
+	__private::common::HashItemFull<KeyType,DataType>* pItem = static_cast<__private::common::HashItemFull<KeyType,DataType>*>(m_pItem);
+	typename Base<KeyType,DataType>::iterator iterToRet(m_pItem);
+	m_pItem = pItem->prevInTheList;
+	return iterToRet;
+}
+
+template <typename KeyType,typename DataType>
+const typename Base<KeyType,DataType>::HashItem* Base<KeyType,DataType>::const_iterator::operator->()const
 {
 	return m_pItem;
 }
 
 template <typename KeyType,typename DataType>
-Base<KeyType,DataType>::iterator::operator typename Base<KeyType,DataType>::HashItem*()
+Base<KeyType,DataType>::const_iterator::operator const typename Base<KeyType,DataType>::HashItem*()const
 {
 	return m_pItem;
 }
-
-template <typename KeyType,typename DataType>
-const typename Base<KeyType,DataType>::HashItem* Base<KeyType,DataType>::iterator::operator->()const
-{
-	return m_pItem;
-}
-
-template <typename KeyType,typename DataType>
-Base<KeyType,DataType>::iterator::operator const typename Base<KeyType,DataType>::HashItem*()const
-{
-	return m_pItem;
-}
-
-//template <typename KeyType,typename DataType>
-//Base<KeyType,DataType>::iterator::operator bool()const
-//{
-//	return m_pItem?true:false;
-//}
-//
-//template <typename KeyType,typename DataType>
-//bool Base<KeyType,DataType>::iterator::operator==(const iterator& a_aM)const
-//{
-//	return m_pItem == a_aM.m_pItem;
-//}
-//
-//template <typename KeyType,typename DataType>
-//bool Base<KeyType,DataType>::iterator::operator!=(const iterator& a_aM)const
-//{
-//	return m_pItem != a_aM.m_pItem;
-//}
-
 
 /*//////////////////////////////////////////////////////////////////////////////////////////////////////*/
 
@@ -404,7 +453,7 @@ typename Base<KeyType,void>::iterator Base<KeyType,void>::FindEntry(const KeyTyp
 	pItemToRet = static_cast<__private::common::HashItemFull<KeyType,void>*>(m_pTable[unHash]);
 
 	while (pItemToRet) {
-		if((a_key==pItemToRet->key)&&a_fnc(a_clbkData,pItemToRet->key)){
+		if((a_key==pItemToRet->first)&&a_fnc(a_clbkData,pItemToRet->first)){
 			return pItemToRet;
 		}
 		pItemToRet = pItemToRet->next;
