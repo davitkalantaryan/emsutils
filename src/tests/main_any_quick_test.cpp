@@ -1,6 +1,10 @@
 
 
 #include <common/hashtbl.hpp>
+#include <common/bigint.hpp>
+#include <type_traits>
+#include <common/endian.hpp>
+#include <iostream>
 
 
 int main()
@@ -22,7 +26,8 @@ int main()
 	}
 	
 	{
-		common::hashtbl::Map<int> aHash;
+		common::hashtbl::Set<int> aHash;
+		//common::hashtbl:: Base<int,void> aHash;
 		
 		size_t unHash;
 		aHash.AddEntry(1);
@@ -30,6 +35,21 @@ int main()
 		aHash.FindEntry(2,&unHash);
 		aHash.AddEntryWithKnownHash(2,unHash);
 	}
+	
+	{
+		common::BigInt<1> a1(2);
+		common::BigInt<1> a2(5);
+		//common::BigInt<1> a3 = ;
+		int ia1 = static_cast<int>(a1+a2);
+		int ia2 = static_cast<int>(a1-a2);
+		//std::make_unsigned< common::BigInt<1> > ua;
+		std::cout << "ia1="<<ia1<<std::endl;
+		std::cout << "ia2="<<ia2<<std::endl;
+		std::cout << "a1+a2="<<a1+a2<<std::endl;
+		std::cout << "a1-a2="<<a1-a2<<std::endl;
+		std::cout << "2*a1-a2*3="<<2*a1-a2*3<<std::endl;
+	}
+	
 	
 	return 0;
 }
