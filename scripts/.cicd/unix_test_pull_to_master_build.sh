@@ -34,4 +34,6 @@ elif [[ "$(expr substr $(uname -s) 1 5)" == "Linux" ]]; then
 fi
 
 cd ${repositoryRoot}/prj/tests/googletest_mult
-make -f unix.Makefile
+make -f unix.Makefile $@
+# to make debug use line below
+#make -f unix.Makefile  DEVSHEET_DEBUG=1
