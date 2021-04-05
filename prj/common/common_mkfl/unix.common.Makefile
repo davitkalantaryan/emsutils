@@ -33,7 +33,8 @@ ifdef LINK_IN_USE
 else
 	LINK = $(DEFAULT_LINK)
 endif
-EMXX=env CCACHE_CPP2=1 ccache em++
+#EMXX=env CCACHE_CPP2=1 ccache em++
+EMXX=em++
 
 COMMON_FLAGS	+= -I$(repoRootPathCppUtils)/include
 
@@ -45,9 +46,11 @@ DEBUG_FLAGS_RELEASE=-O3
 ifdef CPPUTILS_DEBUG
 	DEBUG_FLAGS=$(DEBUG_FLAGS_DEBUG)
 	Configuration=Debug
+	nameExtension=d
 else
 	DEBUG_FLAGS=$(DEBUG_FLAGS_RELEASE)
 	Configuration=Release
+	nameExtension=
 endif
 
 EMFLAGS=$(COMMON_FLAGS) -isystem cpp/_system -Os

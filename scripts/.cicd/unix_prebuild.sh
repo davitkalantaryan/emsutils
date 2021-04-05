@@ -2,18 +2,18 @@
 
 # script to prepare developer host, to work with the code on this repo
 
-scriptDirectoryBase=`dirname ${0}`
-scriptFileName=`basename ${0}`
-cd ${scriptDirectoryBase}
-fileOrigin=`readlink ${scriptFileName}`
-if [ ! -z "$fileOrigin" ]; then
-	relativeSourceDir=`dirname ${fileOrigin}`
-	cd ${relativeSourceDir}
-fi
-scriptDirectory=`pwd`
-echo scriptDirectory=$scriptDirectory
+# https://intoli.com/blog/exit-on-errors-in-bash-scripts/
+# exit when any command fails
+set -e
 
-cd ../..
+# keep track of the last executed command
+trap 'last_command=$current_command; current_command=$BASH_COMMAND' DEBUG
+# echo an error message before exiting
+#trap 'echo "\"${last_command}\" command finished with exit code $?."' EXIT
+
+scriptFileFullPath=`readlink -f ${0}`
+scriptDirectory=`dirname ${scriptFileFullPath}`
+cd ${scriptDirectory}/../..
 repositoryRoot=`pwd`
 
 
@@ -36,7 +36,19 @@ fi
 git submodule sync --recursive
 git submodule update --init --recursive
 
-cd contrib/googletest
-cmake .
+
+# compile google test
+cd ${repositoryRoot}/contrib/googletest
+cmake -H. -B../../build/googletest/Release -DCMAKE_BUILD_TYPE=Release
+cd ../../build/googletest/Release
 cmake --build .
-rm -rf googletest/generated
+mkdir -p ${repositoryRoot}/sys/$lsbCode/Release/lib
+cp lib/*.a ${repositoryRoot}/sys/$lsbCode/Release/lib/.
+#rm -rf googletest/generated
+cd ${repositoryRoot}/contrib/googletest
+cmake -H. -B../../build/googletest/Debug -DCMAKE_BUILD_TYPE=Debug
+cd ../../build/googletest/Debug
+cmake --build .
+mkdir -p ${repositoryRoot}/sys/$lsbCode/Debug/lib
+cp lib/*.a ${repositoryRoot}/sys/$lsbCode/Debug/lib/.
+rm -rf ${repositoryRoot}/contrib/googletest/googletest/generated
