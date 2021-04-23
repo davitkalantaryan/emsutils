@@ -11,6 +11,10 @@
 #QMAKE_CXXFLAGS_WARN_ON += -Wno-unused-function
 #QMAKE_CXXFLAGS_WARN_ON -= -Wunused-function
 
+STATIC_LIB_EXTENSION	= a
+LIB_PREFIX	= lib
+TARGET_PATH_EXTRA	=
+
 contains( TEMPLATE, lib ) {
     TARGET_PATH=lib
     #message("Shared library creation")
@@ -27,6 +31,8 @@ isEmpty(PRJ_PWD_TMP) {
 
 
 win32 {
+	STATIC_LIB_EXTENSION = lib
+	LIB_PREFIX =
     contains(QMAKE_TARGET.arch, x86_64) {
         ## Windows x64 (64bit) specific build here
         CODENAME = win_x64
@@ -53,8 +59,10 @@ win32 {
     CODENAME = ios
     SYSTEM_PATH = sys/$$CODENAME
 } else:wasm {
+	STATIC_LIB_EXTENSION	= ba
     CODENAME = wasm
     SYSTEM_PATH = sys/$$CODENAME
+	TARGET_PATH_EXTRA = /$${TARGET}
 } else {
     CODENAME = unknownCodeName
     SYSTEM_PATH = sys/$$CODENAME
@@ -73,7 +81,7 @@ message("!!! sys_common.pri: SYSTEM_PATH=$${PRJ_PWD}/$${SYSTEM_PATH}")
 # Debug:DESTDIR = debug1
 SYSTEM_PATH=$$SYSTEM_PATH/$$CONFIGURATION
 MAKEFILE = Makefile.$${TARGET}.$${CODENAME}
-DESTDIR = $${PRJ_PWD}/$${SYSTEM_PATH}/$${TARGET_PATH}
+DESTDIR = $${PRJ_PWD}/$${SYSTEM_PATH}/$${TARGET_PATH}$${TARGET_PATH_EXTRA}
 OBJECTS_DIR = $${PRJ_PWD}/$${SYSTEM_PATH}/.objects/$${TARGET}
 
 #CONFIG += debug
