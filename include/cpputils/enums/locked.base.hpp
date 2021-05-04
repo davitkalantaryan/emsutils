@@ -19,18 +19,21 @@ namespace cpputils { namespace enums{
 struct SingleArg{
 	int64_t		val;
 	const char* name;
+	SingleArg(int64_t a_val, const char* a_name):val(a_val),name(a_name){}
 };
 
 
 }}  // namespace cpputils { namespace enums{
 
+#ifndef CPPUTILS_ENUM_TYPED
 #if CPPUTILS_CPP_11_DEFINED
 #define CPPUTILS_ENUM_TYPED(_Name,_integralType,...)	enum _Name : _integralType { __VA_ARGS__ }
 #else
 #define CPPUTILS_ENUM_TYPED(_Name,_integralType,...)	enum _Name { __VA_ARGS__ }
 #endif
+#endif
 
-#define CPPUTILS_MACRO_SINGLE_ARG(_name,_arg)	::cpputils::enums::SingleArg{static_cast<int64_t>(_name::_arg),#_arg}
+#define CPPUTILS_MACRO_SINGLE_ARG(_name,_arg)	new ::cpputils::enums::SingleArg(static_cast<int64_t>(_name::_arg),#_arg)
 #define CPPUTILS_SINGLE_ARGS(_Name,...)			CPPUTILS_MACRO_APPY(CPPUTILS_MACRO_SINGLE_ARG,_Name,__VA_ARGS__)
 
 
