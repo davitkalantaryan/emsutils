@@ -75,7 +75,7 @@ template <uint64_t NUM_QWORDS_DEGR>
 cpputils::BigUInt<NUM_QWORDS_DEGR> operator-(const cpputils::BigUInt<NUM_QWORDS_DEGR>& a_lS, const cpputils::BigUInt<NUM_QWORDS_DEGR>& a_rS)
 {
 	cpputils::BigUInt<NUM_QWORDS_DEGR> ret;
-	cpputils::BigUInt<NUM_QWORDS_DEGR>::OpreatorMinus(&ret, a_lS, a_rS);
+	cpputils::BigUInt<NUM_QWORDS_DEGR>::OperatorMinus(&ret, a_lS, a_rS);
 	return ret;
 }
 
@@ -121,7 +121,7 @@ cpputils::BigUInt<NUM_QWORDS_DEGR> operator-(const cpputils::BigUInt<NUM_QWORDS_
 {
 	const cpputils::BigUInt<NUM_QWORDS_DEGR> aRs(a_rS);
 	cpputils::BigUInt<NUM_QWORDS_DEGR> ret;
-	cpputils::BigUInt<NUM_QWORDS_DEGR>::OpreatorMinus(&ret, a_lS, aRs);
+	cpputils::BigUInt<NUM_QWORDS_DEGR>::OperatorMinus(&ret, a_lS, aRs);
 	return ret;
 }
 
@@ -170,7 +170,7 @@ cpputils::BigInt<NUM_QWORDS_DEGR> operator-(const cpputils::BigInt<NUM_QWORDS_DE
 {
 	const cpputils::BigUInt<NUM_QWORDS_DEGR> aLs(a_lS);
 	cpputils::BigUInt<NUM_QWORDS_DEGR> ret;
-	cpputils::BigUInt<NUM_QWORDS_DEGR>::OpreatorMinus(&ret, aLs, a_rS);
+	cpputils::BigUInt<NUM_QWORDS_DEGR>::OperatorMinus(&ret, aLs, a_rS);
 	return ret;
 }
 
@@ -219,7 +219,7 @@ cpputils::BigUInt<NUM_QWORDS_DEGR> operator-(const cpputils::BigUInt<NUM_QWORDS_
 {
 	const cpputils::BigUInt<NUM_QWORDS_DEGR> aRs(a_rS);
 	cpputils::BigUInt<NUM_QWORDS_DEGR> ret;
-	cpputils::BigUInt<NUM_QWORDS_DEGR>::OpreatorMinus(&ret, a_lS, aRs);
+	cpputils::BigUInt<NUM_QWORDS_DEGR>::OperatorMinus(&ret, a_lS, aRs);
 	return ret;
 }
 
@@ -267,7 +267,7 @@ cpputils::BigUInt<NUM_QWORDS_DEGR> operator-(const NumType& a_rS, const cpputils
 {
 	const cpputils::BigUInt<NUM_QWORDS_DEGR> aLs(a_lS);
 	cpputils::BigUInt<NUM_QWORDS_DEGR> ret;
-	cpputils::BigUInt<NUM_QWORDS_DEGR>::OpreatorMinus(&ret, aLs, a_rS);
+	cpputils::BigUInt<NUM_QWORDS_DEGR>::OperatorMinus(&ret, aLs, a_rS);
 	return ret;
 }
 
@@ -336,8 +336,11 @@ cpputils::BigInt<NUM_QWORDS_DEGR> operator+(const cpputils::BigInt<NUM_QWORDS_DE
 template <uint64_t NUM_QWORDS_DEGR>
 cpputils::BigInt<NUM_QWORDS_DEGR> operator-(const cpputils::BigInt<NUM_QWORDS_DEGR>& a_lS, const cpputils::BigInt<NUM_QWORDS_DEGR>& a_rS)
 {
-	cpputils::BigInt<NUM_QWORDS_DEGR> retInt(a_lS);
-	return retInt.operator-=(a_rS);
+	cpputils::BigUInt<NUM_QWORDS_DEGR> retu;
+	const cpputils::BigUInt<NUM_QWORDS_DEGR> lS(a_lS);
+	const cpputils::BigUInt<NUM_QWORDS_DEGR> rS(a_rS);
+	cpputils::BigUInt<NUM_QWORDS_DEGR>::OperatorMinus(&retu, lS, rS);
+	return cpputils::BigInt<NUM_QWORDS_DEGR>(retu);
 }
 
 
@@ -375,8 +378,12 @@ cpputils::BigInt<NUM_QWORDS_DEGR> operator+(const cpputils::BigInt<NUM_QWORDS_DE
 template <typename NumType, uint64_t NUM_QWORDS_DEGR>
 cpputils::BigInt<NUM_QWORDS_DEGR> operator-(const cpputils::BigInt<NUM_QWORDS_DEGR>& a_lS, const NumType& a_rS)
 {
-	cpputils::BigInt<NUM_QWORDS_DEGR> retInt(a_lS);
-	return  retInt.operator-=(a_rS);
+	cpputils::BigUInt<NUM_QWORDS_DEGR> retu;
+	const cpputils::BigUInt<NUM_QWORDS_DEGR> lS(a_lS);
+	const cpputils::BigUInt<NUM_QWORDS_DEGR> rS0(a_rS);
+	const cpputils::BigUInt<NUM_QWORDS_DEGR> rS( rS0 );
+	cpputils::BigUInt<NUM_QWORDS_DEGR>::OperatorMinus(&retu, lS, rS);
+	return cpputils::BigInt<NUM_QWORDS_DEGR>(retu);	
 }
 
 
@@ -414,8 +421,12 @@ cpputils::BigInt<NUM_QWORDS_DEGR> operator+(const NumType& a_lS, const cpputils:
 template <typename NumType, uint64_t NUM_QWORDS_DEGR>
 cpputils::BigInt<NUM_QWORDS_DEGR> operator-(const NumType& a_lS, const cpputils::BigInt<NUM_QWORDS_DEGR>& a_rS)
 {
-	cpputils::BigInt<NUM_QWORDS_DEGR> retInt(a_lS);
-	return  retInt.operator-=(a_rS);
+	cpputils::BigUInt<NUM_QWORDS_DEGR> retu;
+	const cpputils::BigInt<NUM_QWORDS_DEGR> lS0(a_lS);
+	const cpputils::BigUInt<NUM_QWORDS_DEGR> lS(lS0);
+	const cpputils::BigUInt<NUM_QWORDS_DEGR> rS( a_rS );
+	cpputils::BigUInt<NUM_QWORDS_DEGR>::OperatorMinus(&retu, lS, rS);
+	return cpputils::BigInt<NUM_QWORDS_DEGR>(retu);
 }
 
 
@@ -1017,6 +1028,37 @@ const uint64_t* BigUInt<NUM_QWORDS_DEGR>::buff()const
 	return m_u.b64;
 }
 
+#define cpputils_toDigit(__c) (static_cast<uint64_t>(__c)-static_cast<uint64_t>('0'))
+
+template <uint64_t NUM_QWORDS_DEGR>
+BigUInt<NUM_QWORDS_DEGR> BigUInt<NUM_QWORDS_DEGR>::OperatorAnyIntLiteral(const ::std::string& a_n)
+{
+	const size_t cunStrLen = a_n.length();
+	const char* cpcBuf = a_n.c_str();
+	bool bFirstDigitNotFound = true;
+	uint64_t nextDigit;
+	BigUInt retInt(0);
+
+	for(size_t i(0);i<cunStrLen;++i){
+
+		if(isdigit(cpcBuf[i])){
+			nextDigit = cpputils_toDigit(cpcBuf[i]);
+			retInt *= 10;
+			retInt += nextDigit;
+			bFirstDigitNotFound = false;
+		}
+		else {
+			if (bFirstDigitNotFound) {
+			}
+			else {
+				break;
+			}
+		}
+	}
+
+	return retInt;
+}
+
 
 
 /*/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
@@ -1294,6 +1336,42 @@ template <typename CharType>
 	}
 
 	return retStr;
+}
+
+
+template <uint64_t NUM_QWORDS_DEGR>
+BigInt<NUM_QWORDS_DEGR> BigInt<NUM_QWORDS_DEGR>::OperatorAnyIntLiteral(const ::std::string& a_n)
+{
+	const size_t cunStrLen = a_n.length();
+	const char* cpcBuf = a_n.c_str();
+	bool bFirstDigitNotFound = true;
+	int isMinus = 0;
+	uint64_t nextDigit;
+	BigInt retInt(0);
+
+	for(size_t i(0);i<cunStrLen;++i){
+
+		if(isdigit(cpcBuf[i])){
+			nextDigit = cpputils_toDigit(cpcBuf[i]);
+			retInt *= 10;
+			retInt += nextDigit;
+			bFirstDigitNotFound = false;
+		}
+		else {
+			if (bFirstDigitNotFound) {
+				if (cpcBuf[i] == '-') { isMinus = ~isMinus; }
+			}
+			else {
+				break;
+			}
+		}
+	}
+
+	if(isMinus){
+		retInt *= BigInt(-1);
+	}
+
+	return retInt;
 }
 
 
