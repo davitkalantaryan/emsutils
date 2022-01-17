@@ -234,5 +234,12 @@
 #define CPPUTILS_TRY_CATCH(_expression)   try{(_expression);}catch(...){return;}
 #endif
 
+#define CPPUTILS_IN_OUT
+
+// https://gcc.gnu.org/bugzilla/show_bug.cgi?id=56480
+#ifdef __GNUC__
+#define CPPUTILS_GCC_BUG_56480
+#endif
+
 
 #endif  // #ifndef INCLUDE_CPPUTILS_CPPUTILS_INTERNAL_HEADER_H
