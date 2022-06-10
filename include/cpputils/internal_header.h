@@ -1,18 +1,37 @@
 //
-// file:			cpputils_internal_header.h
-// path:			include/cpputils_internal_header.h
-// created on:		2021 Mar 07
+// file:			internal_header.h
+// path:			include/cpputils/internal_header.h
+// created on:		2022 Jun 04
 // created by:		Davit Kalantaryan (davit.kalantaryan@gmail.com)
 //
 
-#ifndef INCLUDE_CPPUTILS_CPPUTILS_INTERNAL_HEADER_H
-#define INCLUDE_CPPUTILS_CPPUTILS_INTERNAL_HEADER_H
+#ifndef CPPUTILS_INCLUDE_CPPUTILS_INTERNAL_HEADER_H
+#define CPPUTILS_INCLUDE_CPPUTILS_INTERNAL_HEADER_H
 
 #include <stddef.h>
 
 #define cpputils_alloca	alloca
 
 #ifdef _MSC_VER
+
+	#if defined(_WIN64) || defined(_M_ARM)
+		#define CPPUTILS_FNAME_PREFIX ""
+		#define CPPUTILS_DS_FNAME_POSTFIX
+		#define CPPUTILS_SEC_CH_FNC_NAME	"__security_check_cookie"
+	#else
+		#define CPPUTILS_FNAME_PREFIX "_"
+		#define CPPUTILS_DS_FNAME_POSTFIX	"@12"
+		#define CPPUTILS_SEC_CH_FNC_NAME	"@__security_check_cookie@4"
+	#endif
+
+    #define CPPUTILS_C_CODE_INITIALIZER_RAW(_sect,f) \
+        __pragma(section(_sect,read)) \
+        static void f(void); \
+        __declspec(allocate(_sect)) void (*f##_)(void) = f; \
+        __pragma(comment(linker,"/include:" CPPUTILS_FNAME_PREFIX #f "_")) \
+        static void f(void)
+
+    #define CPPUTILS_C_CODE_INITIALIZER(f)  CPPUTILS_C_CODE_INITIALIZER_RAW(".CRT$XCU",f)
 
 	#undef cpputils_alloca
 	#define cpputils_alloca	_alloca
@@ -40,7 +59,17 @@
 #elif defined(__GNUC__) || defined(__clang__) || defined(LINUX_GCC)
     #define CPPUTILS_MAY_ALIAS  __attribute__ ((__may_alias__))
 	#define CPPUTILS_UNREACHABLE_CODE(_code)	_code ;
-	#define CPPUTILS_BEFORE_CPP_17_FALL_THR	__attribute__ ((fallthrough)) ;
+	#if __GNUC__>=7
+		#define CPPUTILS_BEFORE_CPP_17_FALL_THR	__attribute__ ((fallthrough)) ;
+	#elif defined(__has_attribute)
+		#if __has_attribute (fallthrough)
+			#define CPPUTILS_BEFORE_CPP_17_FALL_THR	__attribute__ ((fallthrough)) ;
+		#else
+			#define CPPUTILS_BEFORE_CPP_17_FALL_THR		/* FALLTHRU */
+		#endif
+	#else
+		#define CPPUTILS_BEFORE_CPP_17_FALL_THR		/* FALLTHRU */
+	#endif  // #if __GNUC__>=7
     //#define CPPUTILS_DLL_PUBLIC		__attribute__((visibility("default")))
     #define CPPUTILS_DLL_PUBLIC
     #define CPPUTILS_DLL_PRIVATE		__attribute__((visibility("hidden")))
@@ -123,13 +152,19 @@
 #endif
 
 #ifdef __cplusplus
-#define CPPUTILS_STATIC_CAST(_type,_data)	static_cast<_type>(_data)
+#define CPPUTILS_STATIC_CAST(_type,_data)		static_cast<_type>(_data)
+#define CPPUTILS_REINTERPRET_CAST(_type,_data)	reinterpret_cast<_type>(_data)
+#define CPPUTILS_CONST_CAST(_type,_data)		const_cast<_type>(_data)
+#define CPPUTILS_DYNAMIC_CAST(_type,_data)		dynamic_cast<_type>(_data)
 #define CPPUTILS_GLOBAL	   ::
 #define CPPUTILS_BEGIN_C   extern "C" {
 #define CPPUTILS_END_C     }
 #define CPPUTILS_EXTERN_C  extern "C"
 #else
-#define CPPUTILS_STATIC_CAST(_type,_data)	((_type)(_data))
+#define CPPUTILS_STATIC_CAST(_type,_data)		((_type)(_data))
+#define CPPUTILS_REINTERPRET_CAST(_type,_data)	((_type)(_data))
+#define CPPUTILS_CONST_CAST(_type,_data)		((_type)(_data))
+#define CPPUTILS_DYNAMIC_CAST(_type,_data)		((_type)(_data))
 #define CPPUTILS_GLOBAL
 #define CPPUTILS_BEGIN_C
 #define CPPUTILS_END_C
@@ -255,4 +290,4 @@
 #endif
 
 
-#endif  // #ifndef INCLUDE_CPPUTILS_CPPUTILS_INTERNAL_HEADER_H
+#endif  // #ifndef CPPUTILS_INCLUDE_CPPUTILS_INTERNAL_HEADER_H

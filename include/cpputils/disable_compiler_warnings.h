@@ -8,12 +8,17 @@
 #ifndef CPPUTILS_INCLUDE_DISABLE_COMPILER_WARNINGS_H
 #define CPPUTILS_INCLUDE_DISABLE_COMPILER_WARNINGS_H
 
-#include <cpputils_internal_header.h>
+#include <cpputils/internal_header.h>
 
 #if defined(_MSC_VER)
 
 #pragma warning(disable:4710)
 #pragma warning(disable:4711)
+#pragma warning(disable:4668)
+#pragma warning(disable:4820)
+#ifndef __cplusplus
+#pragma warning(disable:4255)
+#endif
 #if (_MSC_VER>=1929) && (_MSC_FULL_VER>192930100)
 #pragma warning(disable:5246)
 #endif
