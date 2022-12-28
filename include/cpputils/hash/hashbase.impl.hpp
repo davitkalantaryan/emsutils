@@ -32,8 +32,19 @@ namespace cpputils { namespace hash {
 
 
 template <typename InputT,size_t templateDefaultSize,TypeMalloc mallocFn, TypeCalloc callocFn, TypeFree freeFn>
+ApiData<InputT,templateDefaultSize,mallocFn,callocFn,freeFn>::ApiData()
+{
+    m_pThis = static_cast<ApiData**>(mallocFn(sizeof(ApiData*)));
+    if(!m_pThis){throw std::bad_alloc();}
+    *m_pThis = this;
+}
+
+
+
+template <typename InputT,size_t templateDefaultSize,TypeMalloc mallocFn, TypeCalloc callocFn, TypeFree freeFn>
 ApiData<InputT,templateDefaultSize,mallocFn,callocFn,freeFn>::~ApiData()
 {
+    freeFn(m_pThis);
 }
 
 
@@ -59,14 +70,19 @@ void ApiData<InputT,templateDefaultSize,mallocFn,callocFn,freeFn>::InitAllToZero
 template <typename InputT,size_t templateDefaultSize,TypeMalloc mallocFn, TypeCalloc callocFn, TypeFree freeFn>
 void ApiData<InputT,templateDefaultSize,mallocFn,callocFn,freeFn>::ReplaceWithOtherB(ApiData* a_pmM) CPPUTILS_NOEXCEPT
 {
+    ApiData** pThis = m_pThis;
     InputPrivate**	pTable = m_pTable;
 	size_t		unRoundedTableSizeMin1 = m_unRoundedTableSizeMin1;
 	size_t		unSize = m_unSize;
 
+    m_pThis = a_pmM->m_pThis;
+    *m_pThis = this;
 	m_pTable=a_pmM->m_pTable;
 	m_unRoundedTableSizeMin1 = a_pmM->m_unRoundedTableSizeMin1;
 	m_unSize = a_pmM->m_unSize;
 
+    a_pmM->m_pThis = pThis;
+    *(a_pmM->m_pThis) = a_pmM;
 	a_pmM->m_pTable = pTable;
 	a_pmM->m_unRoundedTableSizeMin1 = unRoundedTableSizeMin1;
 	a_pmM->m_unSize = unSize;
@@ -74,19 +90,19 @@ void ApiData<InputT,templateDefaultSize,mallocFn,callocFn,freeFn>::ReplaceWithOt
 
 
 template <typename InputT,size_t templateDefaultSize,TypeMalloc mallocFn, TypeCalloc callocFn, TypeFree freeFn>
-void ApiData<InputT,templateDefaultSize,mallocFn,callocFn,freeFn>::AddEntryWithAlreadyCreatedItemB(InputPrivate* a_pItem, size_t a_hash)
+void ApiData<InputT,templateDefaultSize,mallocFn,callocFn,freeFn>::AddEntryWithAlreadyCreatedItemB(InputPrivate* a_pItem)
 {
-	a_pItem->next = m_pTable[a_hash];
-	if(m_pTable[a_hash]){m_pTable[a_hash]->prev=a_pItem;}
-	m_pTable[a_hash] = a_pItem;	
+    a_pItem->next = m_pTable[a_pItem->m_hash];
+    if(m_pTable[a_pItem->m_hash]){m_pTable[a_pItem->m_hash]->prev=a_pItem;}
+    m_pTable[a_pItem->m_hash] = a_pItem;
 	++m_unSize;
 }
 
 
 template <typename InputT,size_t templateDefaultSize,TypeMalloc mallocFn, TypeCalloc callocFn, TypeFree freeFn>
-void ApiData<InputT,templateDefaultSize,mallocFn,callocFn,freeFn>::RemoveEntryRawB(InputPrivate* a_pItem, size_t a_hash)
+void ApiData<InputT,templateDefaultSize,mallocFn,callocFn,freeFn>::RemoveEntryRawB(InputPrivate* a_pItem)
 {
-    if(m_pTable[a_hash]==a_pItem){m_pTable[a_hash]=a_pItem->next;}
+    if(m_pTable[a_pItem->m_hash]==a_pItem){m_pTable[a_pItem->m_hash]=a_pItem->next;}
     if(a_pItem->next){a_pItem->next->prev=a_pItem->prev;}
     if(a_pItem->prev){a_pItem->prev->next=a_pItem->next;}
 	//delete a_pItem; // delete should be done by caller
@@ -142,6 +158,12 @@ HashBase<Key,InputT,Hash,Equal,templateDefaultSize,mallocFn,callocFn,reallocFn,f
     ApiType::ClearRaw();
     ApiDataAdv::m_unSize = 0;
     ApiDataAdv::m_unRoundedTableSizeMin1 = a_cM.m_unRoundedTableSizeMin1;
+    const size_t tRet(ApiDataAdv::m_unRoundedTableSizeMin1+1);
+    const size_t cunMemSize(tRet*sizeof(InputPrivate*));
+    InputPrivate** pTable = static_cast<InputPrivate**>(reallocFn(ApiDataAdv::m_pTable,cunMemSize));
+    if(!pTable){throw std::bad_alloc();}
+    ApiDataAdv::m_pTable = pTable;
+    :: memset(ApiDataAdv::m_pTable,0,cunMemSize);
     ApiType::GeFromOther(a_cM);
     return *this;
 }
@@ -164,7 +186,7 @@ bool HashBase<Key,InputT,Hash,Equal,templateDefaultSize,mallocFn,callocFn,reallo
     size_t unHash;
     Input* pItem = findEntryRaw(a_key,&unHash);
     if(pItem){
-        ApiType::RemoveEntryRaw(COutput(this,pItem,unHash));
+        ApiType::RemoveEntryRaw(COutput(pItem));
         return true;
     }
     return false;
@@ -205,7 +227,7 @@ HashBase<Key,InputT,Hash,Equal,templateDefaultSize,mallocFn,callocFn,reallocFn,f
 AddEntryWithKnownHashMv(Input&& a_item, size_t a_hash)
 {
     Input* pInTheTable = ApiType::AddEntryWithKnownHashRaw(::std::move(a_item),a_hash);
-    return Output(this,pInTheTable,a_hash);
+    return Output(pInTheTable);
 }
 
 
@@ -248,7 +270,7 @@ HashBase<Key,InputT,Hash,Equal,templateDefaultSize,mallocFn,callocFn,reallocFn,f
 {
     size_t unHash;
     Input* pItem = findEntryRaw(a_item.first,&unHash);
-    if(pItem){return Output(this,CPPUTILS_NULL,0);}
+    if(pItem){return Output(CPPUTILS_NULL);}
     return AddEntryWithKnownHashMv(::std::move(a_item),unHash);
 }
 
@@ -260,7 +282,7 @@ HashBase<Key,InputT,Hash,Equal,templateDefaultSize,mallocFn,callocFn,reallocFn,f
 {
     size_t unHash;
     Input* pItem = findEntryRaw(a_item.first,&unHash);
-    if(pItem){return Output(this,CPPUTILS_NULL,0);}
+    if(pItem){return Output(CPPUTILS_NULL);}
     return AddEntryWithKnownHashC(a_item,unHash);
 }
 
@@ -275,7 +297,7 @@ HashBase<Key,InputT,Hash,Equal,templateDefaultSize,mallocFn,callocFn,reallocFn,f
     Input* pItem = findEntryRaw(a_item.first,&unHash);
     if(pItem){
         *pItem= ::std::move(a_item);
-        return Output(this,pItem,unHash);
+        return Output(pItem);
     }
     return AddEntryWithKnownHashMv(a_item,unHash);
 }
@@ -290,7 +312,7 @@ HashBase<Key,InputT,Hash,Equal,templateDefaultSize,mallocFn,callocFn,reallocFn,f
     Input* pItem = findEntryRaw(a_item.first,&unHash);
     if(pItem){
         *pItem= a_item;
-        return Output(this,pItem,unHash);
+        return Output(pItem);
     }
     return AddEntryWithKnownHashC(a_item,unHash);
 }
@@ -331,12 +353,12 @@ find( const Key& a_key, size_t* a_hashPtr )const
 {
     if(a_hashPtr){
         Input* pItem = findEntryRaw(a_key,a_hashPtr);
-        return Output(this,pItem,*a_hashPtr);
+        return Output(pItem);
     }
     
     size_t unHash;
     Input* pItem = findEntryRaw(a_key,&unHash);
-    return Output(this,pItem,unHash);
+    return Output(pItem);
 }
 
 

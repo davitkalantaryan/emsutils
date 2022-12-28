@@ -9,17 +9,18 @@
 #QMAKE_CXXFLAGS_WARN_ON += -Wno-unused-parameter
 
 
+message("!!! $${PWD}/sys_common.pri")
+
 STATIC_LIB_EXTENSION	= a
 LIB_PREFIX		= lib
 TARGET_PATH_EXTRA	=
 
-isEmpty( repositoryRoot ) {
-	repositoryRoot = $${PWD}/../../..
-}
-
-
 isEmpty( cpputilsRepoRoot ) {
 	cpputilsRepoRoot = $${PWD}/../../..
+}
+
+isEmpty( repositoryRoot ) {
+	repositoryRoot = $${cpputilsRepoRoot}
 }
 
 isEmpty( TARGET_PATH ) {
@@ -29,7 +30,6 @@ isEmpty( TARGET_PATH ) {
 	    TARGET_PATH=bin
 	}
 }
-
 
 isEmpty(artifactRoot) {
     artifactRoot = $${repositoryRoot}

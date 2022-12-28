@@ -39,6 +39,8 @@
 	//#if _MSC_FULL_VER
 	#if (_MSC_VER>1900) // 1900 is VS2015
 		#pragma warning (disable:5045)
+		#pragma warning (disable:5247)
+		#pragma warning (disable:5248)
 	#endif
 	// assignment within conditional expression (https://docs.microsoft.com/en-us/cpp/error-messages/compiler-warnings/compiler-warning-level-4-c4706?view=msvc-160)
 	#pragma warning (disable:4706) 
@@ -278,6 +280,19 @@
 #else
 #define CPPUTILS_NODISCARD	throw()
 #endif
+
+#if defined(__GNUC__) || defined(__clang__) || defined(LINUX_GCC)
+#define CPPUTILS_LIKELY(_x)             __builtin_expect(!!(_x), 1)
+#define CPPUTILS_UNLIKELY(_x)           __builtin_expect(!!(_x), 0)
+#define CPPUTILS_LIKELY_VALUE(_x,_val)  __builtin_expect((_x), (_val))
+#else
+#define CPPUTILS_LIKELY(_x)             (_x)
+#define CPPUTILS_UNLIKELY(_x)           (_x)
+#define CPPUTILS_LIKELY_VALUE(_x,_val)  ((_x)==(_val))
+#endif
+
+
+#define CPPUTILS_ARG_NONULL
 
 
 #endif  // #ifndef CPPUTILS_INCLUDE_CPPUTILS_INTERNAL_HEADER_H

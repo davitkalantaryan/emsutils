@@ -31,16 +31,18 @@ public:
     typedef it::InputPrivate<Input,mallocFn,freeFn> InputPrivate;
         
 public:
+    ApiData();
     virtual ~ApiData();
         
 protected:
     void ConstructAfterRoundedTableSizeMin1IsKnownB();
     void InitAllToZeroB();
     void ReplaceWithOtherB(ApiData*) CPPUTILS_NOEXCEPT;
-    void AddEntryWithAlreadyCreatedItemB(InputPrivate* a_pItem, size_t a_hash);
-    void RemoveEntryRawB(InputPrivate* a_pItem, size_t a_hash);
+    void AddEntryWithAlreadyCreatedItemB(InputPrivate* a_pItem);
+    void RemoveEntryRawB(InputPrivate* a_pItem);
     
 protected:
+    ApiData**       m_pThis;
     InputPrivate**  m_pTable;
 	size_t          m_unRoundedTableSizeMin1;
 	size_t          m_unSize;
