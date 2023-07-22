@@ -9,8 +9,10 @@
 #define CPPUTILS_INCLUDE_CPPUTILS_BIGINT_HPP
 
 #include <cpputils/export_symbols.h>
+#include <cinternal/disable_compiler_warnings.h>
 #include <string>
 #include <ios>
+#include <cinternal/undisable_compiler_warnings.h>
 #include <stdint.h>
 #ifdef CPPUTILS_CPP_11_DEFINED
 #include <array>

@@ -8,7 +8,9 @@
 #pragma once
 
 #include <cpputils/export_symbols.h>
+#include <cinternal/disable_compiler_warnings.h>
 #include <string>
+#include <cinternal/undisable_compiler_warnings.h>
 
 #ifdef CPPUTILS_EMSCRIPTEN_IS_USED
 #include <emscripten/emscripten.h>
