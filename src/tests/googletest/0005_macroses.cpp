@@ -4,7 +4,7 @@
 //
 
 #include "gtest/gtest.h"
-#include <cpputils/macroses.h>
+#include <cinternal/macroses.h>
 #include <string>
 #include <stdarg.h>
 
