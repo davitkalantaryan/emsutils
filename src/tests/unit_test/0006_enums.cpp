@@ -3,7 +3,7 @@
 // created on:		2021 Apr 11
 //
 
-#include "gtest/gtest.h"
+#include <cinternal/unit_test.h>
 #include <cpputils/enums.hpp>
 #include <iostream>
 

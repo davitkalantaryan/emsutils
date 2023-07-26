@@ -3,7 +3,7 @@
 // created on:		2022 Feb 28
 //
 
-#include "gtest/gtest.h"
+#include <cinternal/unit_test.h>
 #include <cpputils/endian.h>
 
 #define CPPUTILS_INIT_VAL	1

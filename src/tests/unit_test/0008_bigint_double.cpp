@@ -3,8 +3,9 @@
 // created on:		2021 Oct 10
 //
 
-#include "gtest/gtest.h"
+#include <cinternal/unit_test.h>
 #include <cpputils/bigint.hpp>
+#include <iostream>
 #include <stdio.h>
 
 

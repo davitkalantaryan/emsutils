@@ -19,9 +19,6 @@
     <Filter Include="Source Files\tests">
       <UniqueIdentifier>{139ee4ad-4dfe-44b9-aacb-6652b0957ba5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\tests\googletest">
-      <UniqueIdentifier>{e40682fe-cd27-40fd-87fa-c1fb675fb8a4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\incude">
       <UniqueIdentifier>{3033059e-d64c-4cf6-8d6a-78278f262a93}</UniqueIdentifier>
     </Filter>
@@ -34,40 +31,25 @@
     <Filter Include="Header Files\incude\cpputils\hash">
       <UniqueIdentifier>{9c5c2332-22b0-43bb-8505-473f578c9174}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\tests\unit_test">
+      <UniqueIdentifier>{68f0ce51-e8b8-4479-8958-358531f194f9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="windows.Makefile">
-      <Filter>files</Filter>
-    </None>
     <None Include="packages.config.locked">
       <Filter>files</Filter>
     </None>
-    <None Include="unix.Makefile">
+    <None Include="cpputils_unit_test.pro">
+      <Filter>files</Filter>
+    </None>
+    <None Include="cpputils_unit_test.unix.Makefile">
+      <Filter>files</Filter>
+    </None>
+    <None Include="cpputils_unit_test.windows.Makefile">
       <Filter>files</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\src\tests\googletest\0000_initial.cpp">
-      <Filter>Source Files\tests\googletest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\tests\googletest\0001_hash.cpp">
-      <Filter>Source Files\tests\googletest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\tests\googletest\0002_bigint.cpp">
-      <Filter>Source Files\tests\googletest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\tests\googletest\0003_function_old.cpp">
-      <Filter>Source Files\tests\googletest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\tests\googletest\0004_sharedptr.cpp">
-      <Filter>Source Files\tests\googletest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\tests\googletest\0005_macroses.cpp">
-      <Filter>Source Files\tests\googletest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\tests\googletest\0006_enums.cpp">
-      <Filter>Source Files\tests\googletest</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\core\cpputils_bigint.cpp">
       <Filter>Source Files\core</Filter>
     </ClCompile>
@@ -80,29 +62,62 @@
     <ClCompile Include="..\..\..\src\core\cpputils_inscopecleaner.cpp">
       <Filter>Source Files\core</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\tests\googletest\0007_tls_data.cpp">
-      <Filter>Source Files\tests\googletest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\tests\googletest\0008_bigint_double.cpp">
-      <Filter>Source Files\tests\googletest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\tests\googletest\0009_new_hash.cpp">
-      <Filter>Source Files\tests\googletest</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\tests\googletest\0010_endian_h.cpp">
-      <Filter>Source Files\tests\googletest</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\core\cpputils_thread_local.cpp">
       <Filter>Source Files\core</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\tests\googletest\0011_multifor.cpp">
-      <Filter>Source Files\tests\googletest</Filter>
+    <ClCompile Include="..\..\..\src\core\cpputils_core_emscripten.cpp">
+      <Filter>Source Files\core</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\tests\googletest\0012_hash_dllhash.cpp">
-      <Filter>Source Files\tests\googletest</Filter>
+    <ClCompile Include="..\..\..\src\core\cpputils_core_parser_conf01.cpp">
+      <Filter>Source Files\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\core\cpputils_mutex_ml.cpp">
+      <Filter>Source Files\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\core\cpputils_unnamedsemaphore.cpp">
+      <Filter>Source Files\core</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\core\cpputils_multifor_c1.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\tests\unit_test\0000_initial.cpp">
+      <Filter>Source Files\tests\unit_test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\tests\unit_test\0001_hash.cpp">
+      <Filter>Source Files\tests\unit_test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\tests\unit_test\0002_bigint.cpp">
+      <Filter>Source Files\tests\unit_test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\tests\unit_test\0003_function_old.cpp">
+      <Filter>Source Files\tests\unit_test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\tests\unit_test\0004_sharedptr.cpp">
+      <Filter>Source Files\tests\unit_test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\tests\unit_test\0005_macroses.cpp">
+      <Filter>Source Files\tests\unit_test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\tests\unit_test\0006_enums.cpp">
+      <Filter>Source Files\tests\unit_test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\tests\unit_test\0007_tls_data.cpp">
+      <Filter>Source Files\tests\unit_test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\tests\unit_test\0008_bigint_double.cpp">
+      <Filter>Source Files\tests\unit_test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\tests\unit_test\0009_new_hash.cpp">
+      <Filter>Source Files\tests\unit_test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\tests\unit_test\0010_endian_h.cpp">
+      <Filter>Source Files\tests\unit_test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\tests\unit_test\0011_multifor.cpp">
+      <Filter>Source Files\tests\unit_test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\tests\unit_test\0012_hash_dllhash.cpp">
+      <Filter>Source Files\tests\unit_test</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

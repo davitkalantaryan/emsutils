@@ -5,7 +5,7 @@
 
 #include <cpputils/export_symbols.h>
 #ifdef CPPUTILS_CPP_11_DEFINED
-#include "gtest/gtest.h"
+#include <cinternal/unit_test.h>
 #include <cpputils/tls_data.hpp>
 #include <iostream>
 #include <mutex>

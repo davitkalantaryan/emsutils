@@ -3,7 +3,7 @@
 // created on:		2021 Feb 02
 //
 
-#include "gtest/gtest.h"
+#include <cinternal/unit_test.h>
 #include <cpputils/functional_old.hpp>
 
 static size_t SumStatic(int a_val1, int a_val2, int a_val3);

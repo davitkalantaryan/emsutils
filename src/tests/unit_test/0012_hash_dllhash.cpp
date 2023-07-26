@@ -3,7 +3,7 @@
 // created on:		2022 Sep 25
 //
 
-#include "gtest/gtest.h"
+#include <cinternal/unit_test.h>
 #include <cpputils/export_symbols.h>
 
 #ifdef CPPUTILS_CPP_11_DEFINED

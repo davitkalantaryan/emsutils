@@ -7,7 +7,7 @@
 
 #ifdef CPPUTILS_CPP_11_DEFINED
 
-#include "gtest/gtest.h"
+#include <cinternal/unit_test.h>
 #include <cpputils/hash/hash.hpp>
 #include <cpputils/hash/lhash.hpp>
 #include <cpputils/hash/vhash.hpp>

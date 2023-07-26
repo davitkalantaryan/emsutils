@@ -3,7 +3,7 @@
 // created on:		2021 Feb 02
 //
 
-#include <cinternal/unit_test_like_gtest.h>
+#include <cinternal/unit_test.h>
 #include <cpputils/hashtbl.hpp>
 #ifdef CPPUTILS_CPP_11_DEFINED
 #include <utility>

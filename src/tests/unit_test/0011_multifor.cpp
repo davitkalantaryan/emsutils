@@ -3,7 +3,7 @@
 // created on:		2022 May 24
 //
 
-#include "gtest/gtest.h"
+#include <cinternal/unit_test.h>
 #include <cpputils/multifor/c1.hpp>
 
 //#ifdef CPPUTILS_CPP_11_DEFINED
