@@ -19,14 +19,14 @@ win32{
 	LIBS += -pthread
 }
 
-SRC_DIR=$${repoRootPath}/src/tests/unit_test
+SRC_DIR=$${cpputilsRepoRoot}/src/tests/unit_test
 
-INCLUDEPATH += "$${PWD}/../../../include"
-INCLUDEPATH += "$${PWD}/../../../contrib/googletest/googletest/include"
+DEFINES += CINTERNAL_UNIT_TEST_USE_GTEST_LIKE_MACROSES
 
-SOURCES	+= $$files($${repoRootPath}/src/core/*.cpp)  # I assume, that in core we will not have subdirs
-COMMON_HDRS	= $$files($${repoRootPath}/include/*.h,true)
-COMMON_HDRSPP	= $$files($${repoRootPath}/include/*.hpp,true)
+
+SOURCES	+= $$files($${cpputilsRepoRoot}/src/core/*.cpp)  # I assume, that in core we will not have subdirs
+COMMON_HDRS	= $$files($${cpputilsRepoRoot}/include/*.h,true)
+COMMON_HDRSPP	= $$files($${cpputilsRepoRoot}/include/*.hpp,true)
 
 UNITTEST_SRCS	= $$files($${SRC_DIR}/*.cpp,true)
 UNITTEST_HDRS	= $$files($${SRC_DIR}/*.h,true)
@@ -39,7 +39,5 @@ HEADERS += $$UNITTEST_HDRSPP
 HEADERS += $$COMMON_HDRS
 HEADERS += $$COMMON_HDRSPP
 
-OTHER_FILES +=	\
-	"$${PWD}/unix.Makefile"										\
-	"$${PWD}/windows.Makefile"									\
-	"$${PWD}/packages.config"
+OTHER_FILES += $$files($${PWD}/*.Makefile)
+OTHER_FILES += "$${PWD}/packages.config.locked"

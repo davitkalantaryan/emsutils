@@ -15,7 +15,7 @@ COMMON_SRC_DIR=$(cpputilsRepoRoot)/src/core
 GTEST_SRCS	= $(shell find $(GTEST_SRC_DIR) -name "*.cpp")
 COMMON_SRCS	= $(shell find $(COMMON_SRC_DIR) -name "*.cpp")
 
-CPPFLAGS += -I$(cpputilsRepoRoot)/contrib/googletest/googletest/include
+CFLAGS += -DCINTERNAL_UNIT_TEST_USE_GTEST_LIKE_MACROSES
 # c=+ 11 is needed for google test
 CPPFLAGS += -std=c++11
 

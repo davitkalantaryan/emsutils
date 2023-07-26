@@ -61,6 +61,7 @@ INCLUDE_PATHS			= $(INCLUDE_PATHS) /I"$(GoogleTestDir)\googletest\include"
 INCLUDE_PATHS			= $(INCLUDE_PATHS) /I"$(RepoRootDir)\include"
 INCLUDE_PATHS			= $(INCLUDE_PATHS) /I"$(RepoRootDir)\contrib\cinternal\include"
 CFLAGS				= $(CFLAGS) $(INCLUDE_PATHS) $(DEFINES)
+CFLAGS				= $(CFLAGS) /D "CINTERNAL_UNIT_TEST_USE_GTEST_LIKE_MACROSES"
 CXXFLAGS			= $(CXXFLAGS) $(CFLAGS)
 
 LIBPATHS			= $(LIBPATHS) /LIBPATH:"$(RepoRootDir)\sys\win_$(Platform)\$(Configuration)\lib"
