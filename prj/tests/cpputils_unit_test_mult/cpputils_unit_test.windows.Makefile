@@ -93,4 +93,4 @@ __buildGoogleTestLib:
 	@cd $(MakeFileDir)
 	@echo "!!!!!! 'msbuild -t:restore -p:RestorePackagesConfig=true' is not necessary anymore"
 
-!include <$(RepoRootDir)\prj\common\common_mkfl\windows.common.Makefile>
+!include <$(RepoRootDir)\prj\common\common_mkfl\flagsandsys_common_private.windows.Makefile>
