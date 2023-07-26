@@ -16,6 +16,9 @@
 
 namespace cpputils { namespace hash {
 
+#ifdef _MSC_VER
+#pragma warning (disable:4820)  //  '4' bytes padding added after data ...
+#endif
 
 #define CPPUTILS_HASH_DEFAULT_TABLE_SIZE	256
 #define CPPUTILS_HASH_VECTOR_RESIZE_SIZE	512
