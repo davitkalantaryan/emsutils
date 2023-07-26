@@ -10,7 +10,6 @@
 #include <cpputils/bigint.hpp>
 #include <cpputils/functional_old.hpp>
 #include <cpputils/sharedptr.hpp>
-#include <cpputils/endian.h>
 #include <cpputils/enums.hpp>
 #include <cpputils/enums/fast.hpp>
 #include <cpputils/tls_data.hpp>
@@ -19,6 +18,7 @@
 #include <cpputils/hash/lhash.hpp>
 #include <cpputils/hash/dllhash.hpp>
 #include <cinternal/bistateflags.h>
+#include <cinternal/endian.h>
 #include <type_traits>
 #include <iostream>
 #include <typeinfo>

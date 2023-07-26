@@ -1,14 +1,13 @@
 #
-# file:			googletest_getter.pro
-# path:			prj/tests/googletest_mult/googletest_getter.pro
+# file:			cpputils_unit_test.pro
+# path:			prj/tests/cpputils_unit_test_mult/cpputils_unit_test.pro
 # created on:	2021 Mar 27
 # created by:	Davit Kalantaryan
 #
 
-include ( "$${PWD}/../../common/common_qt/sys_common.pri" )
-
-# we reevaluate this
-DESTDIR = "$${artifactRoot}/$${SYSTEM_PATH}/test"
+message("!!! $${_PRO_FILE_}")
+include ( "$${PWD}/../../common/common_qt/flagsandsys_common.pri" )
+DESTDIR     = "$${artifactRoot}/sys/$${CODENAME}/$$CONFIGURATION/test"
 
 QT -= gui
 QT -= core
@@ -17,18 +16,15 @@ CONFIG -= qt
 
 win32{
 } else {
-	LIBS += "$${PWD}/../../../sys/$$CODENAME/$$CONFIGURATION/lib/libgtest_main$${nameExtension}.a"
-	LIBS += "$${PWD}/../../../sys/$$CODENAME/$$CONFIGURATION/lib/libgtest$${nameExtension}.a"
 	LIBS += -pthread
 }
 
-repoRootPath=$${PWD}/../../..
-SRC_DIR=$${repoRootPath}/src/tests/googletest
+SRC_DIR=$${repoRootPath}/src/tests/unit_test
 
 INCLUDEPATH += "$${PWD}/../../../include"
 INCLUDEPATH += "$${PWD}/../../../contrib/googletest/googletest/include"
 
-COMMON_SRCS	= $$files($${repoRootPath}/src/core/*.cpp)  # I assume, that in core we will not have subdirs
+SOURCES	+= $$files($${repoRootPath}/src/core/*.cpp)  # I assume, that in core we will not have subdirs
 COMMON_HDRS	= $$files($${repoRootPath}/include/*.h,true)
 COMMON_HDRSPP	= $$files($${repoRootPath}/include/*.hpp,true)
 

@@ -38,7 +38,7 @@ TEST(f_0007_tls_data, t0000_tls_data)
 	aData = 1;
 	ASSERT_EQ(static_cast<int>(aData),1);
 	
-	std::thread aThread([&aData,pData](){
+	std::thread aThread([&aData,pData, CINTERNAL_UNIT_TEST_FN_ARGS_CAPTURE](){
 		ASSERT_EQ(&aData,pData);
 		ASSERT_EQ(static_cast<int>(aData),0); // we have other value inside thread
 		aData = 2;
@@ -66,7 +66,7 @@ TEST(f_0007_tls_data, t0001_tls_unique_ptr)
 	::std::cout << "number of threads: " << nNumberOfThreads << ::std::endl;
 	vThreads.resize(nNumberOfThreads);
 	for(i=0;i<nNumberOfThreads;++i){
-		vThreads[i] = new ::std::thread([pTlsPtr](){
+		vThreads[i] = new ::std::thread([pTlsPtr, CINTERNAL_UNIT_TEST_FN_ARGS_CAPTURE](){
 			ASSERT_EQ(pTlsPtr->get(),nullptr);  // we here have null
 			*pTlsPtr = new TestClass;
 		});

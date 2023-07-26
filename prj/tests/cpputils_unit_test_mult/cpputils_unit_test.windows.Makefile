@@ -43,14 +43,14 @@ Configuration			= Debug
 #!IF "$(MakeFileDir)" == ""
 MakeFileDir			= $(MAKEDIR)
 !ENDIF
-MakeFileName                    = windows.Makefile
+MakeFileName                    = cpputils_unit_test.windows.Makefile
 
 RepoRootDir			= $(MakeFileDir)\..\..\..
 cpputilsRepoRoot		= $(RepoRootDir)
 SrcBaseDir			= $(MakeFileDir)\..\..\..\src
 GoogleTestDir			= $(RepoRootDir)\contrib\googletest
 
-TargetName			= unittest
+TargetName			= cpputils_unit_test
 TargetExtension			= exe
 TargetCategory                  = test
 

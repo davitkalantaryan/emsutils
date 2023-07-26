@@ -1,5 +1,5 @@
 
-targetName=unittest
+targetName=cpputils_unit_test
 
 mkfile_path		=  $(abspath $(lastword $(MAKEFILE_LIST)))
 mkfile_dir		=  $(shell dirname $(mkfile_path))
@@ -9,7 +9,7 @@ firstTarget: all
 
 include $(mkfile_dir)/../../common/common_mkfl/sys_common.unix.Makefile
 
-GTEST_SRC_DIR=$(cpputilsRepoRoot)/src/tests/googletest
+GTEST_SRC_DIR=$(cpputilsRepoRoot)/src/tests/unit_test
 COMMON_SRC_DIR=$(cpputilsRepoRoot)/src/core
 
 GTEST_SRCS	= $(shell find $(GTEST_SRC_DIR) -name "*.cpp")
@@ -19,8 +19,6 @@ CPPFLAGS += -I$(cpputilsRepoRoot)/contrib/googletest/googletest/include
 # c=+ 11 is needed for google test
 CPPFLAGS += -std=c++11
 
-LIBS += $(artifactRoot)/sys/$(lsbCode)/$(Configuration)/lib/libgtest_main$(nameExtension).a
-LIBS += $(artifactRoot)/sys/$(lsbCode)/$(Configuration)/lib/libgtest$(nameExtension).a
 LIBS += -pthread
 
 all: $(artifactRoot)/sys/$(lsbCode)/$(Configuration)/test/$(targetName)

@@ -1,5 +1,5 @@
 #
-# repo:			cutils
+# repo:			cpputils
 # name:			flagsandsys_common.pri
 # path:			prj/common/common_qt/flagsandsys_common.pri
 # created on:   2023 Jun 21
@@ -10,18 +10,18 @@
 
 message("!!! $${PWD}/flagsandsys_common.pri")
 
-isEmpty(cutilsFlagsAndSysCommonIncluded){
-    cutilsFlagsAndSysCommonIncluded = 1
+isEmpty(cpputilsFlagsAndSysCommonIncluded){
+    cpputilsFlagsAndSysCommonIncluded = 1
 
-    cutilsRepoRoot = $${PWD}/../../..
-	include("$${cutilsRepoRoot}/contrib/cinternal/prj/common/common_qt/flagsandsys_common.pri")
+    cpputilsRepoRoot = $${PWD}/../../..
+	include("$${cpputilsRepoRoot}/contrib/cinternal/prj/common/common_qt/flagsandsys_common.pri")
 
     isEmpty(artifactRoot) {
         artifactRoot = $$(artifactRoot)
 		isEmpty(artifactRoot) {
-			artifactRoot = $${cutilsRepoRoot}
+			artifactRoot = $${cpputilsRepoRoot}
 		}
     }
 
-    INCLUDEPATH += $${cutilsRepoRoot}/include
+    INCLUDEPATH += $${cpputilsRepoRoot}/include
 }

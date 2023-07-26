@@ -4,7 +4,8 @@
 //
 
 #include <cinternal/unit_test.h>
-#include <cpputils/endian.h>
+#include <cinternal/endian.h>
+#include <stdint.h>
 
 #define CPPUTILS_INIT_VAL	1
 

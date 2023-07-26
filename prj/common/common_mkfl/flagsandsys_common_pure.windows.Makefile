@@ -15,8 +15,8 @@ MakeFileDir			= $(MAKEDIR)
 RepoRootDir			= $(MakeFileDir)\..\..\..
 !ENDIF
 
-!IFNDEF cutilsRepoRoot
-cutilsRepoRoot	= $(RepoRootDir)
+!IFNDEF cpputilsRepoRoot
+cpputilsRepoRoot	= $(RepoRootDir)
 !ENDIF
 
-CFLAGS				= $(CFLAGS) /I"$(cutilsRepoRoot)\include"
+CFLAGS				= $(CFLAGS) /I"$(cpputilsRepoRoot)\include"

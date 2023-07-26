@@ -41,6 +41,9 @@
     <None Include="packages.config.locked" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\contrib\cinternal\src\core\cinternal_core_logger.c" />
+    <ClCompile Include="..\..\..\contrib\cinternal\src\core\cinternal_core_unit_test_checks.c" />
+    <ClCompile Include="..\..\..\contrib\cinternal\src\core\cinternal_core_unit_test_main.c" />
     <ClCompile Include="..\..\..\src\core\cpputils_bigint.cpp" />
     <ClCompile Include="..\..\..\src\core\cpputils_core_emscripten.cpp" />
     <ClCompile Include="..\..\..\src\core\cpputils_core_parser_conf01.cpp" />
@@ -68,8 +71,16 @@
   <ItemGroup>
     <ClInclude Include="..\..\..\include\cpputils\bigint.hpp" />
     <ClInclude Include="..\..\..\include\cpputils\bigint.impl.hpp" />
-    <ClInclude Include="..\..\..\include\cpputils\endian.h" />
+    <ClInclude Include="..\..\..\include\cpputils\emscripten.hpp" />
     <ClInclude Include="..\..\..\include\cpputils\enums.hpp" />
+    <ClInclude Include="..\..\..\include\cpputils\enums\fast.hpp" />
+    <ClInclude Include="..\..\..\include\cpputils\enums\fast.impl.hpp" />
+    <ClInclude Include="..\..\..\include\cpputils\enums\locked.base.hpp" />
+    <ClInclude Include="..\..\..\include\cpputils\enums\locked.full.hpp" />
+    <ClInclude Include="..\..\..\include\cpputils\enums\locked.full.impl.hpp" />
+    <ClInclude Include="..\..\..\include\cpputils\enums\locked.fullslow.hpp" />
+    <ClInclude Include="..\..\..\include\cpputils\enums\locked.fullslow.impl.hpp" />
+    <ClInclude Include="..\..\..\include\cpputils\export_symbols.h" />
     <ClInclude Include="..\..\..\include\cpputils\functional.hpp" />
     <ClInclude Include="..\..\..\include\cpputils\functional_old.hpp" />
     <ClInclude Include="..\..\..\include\cpputils\functional_old.impl.hpp" />
@@ -89,10 +100,19 @@
     <ClInclude Include="..\..\..\include\cpputils\hash\vhash.hpp" />
     <ClInclude Include="..\..\..\include\cpputils\hash\vhash.impl.hpp" />
     <ClInclude Include="..\..\..\include\cpputils\inscopecleaner.hpp" />
-    <ClInclude Include="..\..\..\include\cpputils\macroses.h" />
+    <ClInclude Include="..\..\..\include\cpputils\multifor\c1.hpp" />
+    <ClInclude Include="..\..\..\include\cpputils\mutex_ml.hpp" />
+    <ClInclude Include="..\..\..\include\cpputils\parser\conf01.hpp" />
+    <ClInclude Include="..\..\..\include\cpputils\protecteddata.hpp" />
+    <ClInclude Include="..\..\..\include\cpputils\protecteddata.impl.hpp" />
     <ClInclude Include="..\..\..\include\cpputils\sharedptr.hpp" />
     <ClInclude Include="..\..\..\include\cpputils\sharedptr.impl.hpp" />
-    <ClInclude Include="..\..\..\include\cpputils\internal_header.h" />
+    <ClInclude Include="..\..\..\include\cpputils\thread_local.h" />
+    <ClInclude Include="..\..\..\include\cpputils\tls_data.hpp" />
+    <ClInclude Include="..\..\..\include\cpputils\tls_data.impl.hpp" />
+    <ClInclude Include="..\..\..\include\cpputils\tls_ptr.posix.impl.hpp" />
+    <ClInclude Include="..\..\..\include\cpputils\tls_ptr.windows.impl.hpp" />
+    <ClInclude Include="..\..\..\include\cpputils\unnamedsemaphore.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <GoogleTestConfiguration Condition="'$(Configuration)'=='Debug'">d</GoogleTestConfiguration>
@@ -253,7 +273,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(OutDir)..\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>gtest_main$(GoogleTestConfiguration).lib;gtest$(GoogleTestConfiguration).lib;Ws2_32.lib</AdditionalDependencies>
+      <AdditionalDependencies>Ws2_32.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
@@ -267,7 +287,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(OutDir)..\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>gtest_main$(GoogleTestConfiguration).lib;gtest$(GoogleTestConfiguration).lib;Ws2_32.lib</AdditionalDependencies>
+      <AdditionalDependencies>Ws2_32.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
@@ -281,7 +301,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(OutDir)..\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>gtest_main$(GoogleTestConfiguration).lib;gtest$(GoogleTestConfiguration).lib;Ws2_32.lib</AdditionalDependencies>
+      <AdditionalDependencies>Ws2_32.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -299,7 +319,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(OutDir)..\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>gtest_main$(GoogleTestConfiguration).lib;gtest$(GoogleTestConfiguration).lib;Ws2_32.lib</AdditionalDependencies>
+      <AdditionalDependencies>Ws2_32.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
@@ -317,7 +337,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(OutDir)..\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>gtest_main$(GoogleTestConfiguration).lib;gtest$(GoogleTestConfiguration).lib;Ws2_32.lib</AdditionalDependencies>
+      <AdditionalDependencies>Ws2_32.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
@@ -335,7 +355,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(OutDir)..\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>gtest_main$(GoogleTestConfiguration).lib;gtest$(GoogleTestConfiguration).lib;Ws2_32.lib</AdditionalDependencies>
+      <AdditionalDependencies>Ws2_32.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -349,7 +369,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(OutDir)..\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>gtest_main$(GoogleTestConfiguration).lib;gtest$(GoogleTestConfiguration).lib;Ws2_32.lib</AdditionalDependencies>
+      <AdditionalDependencies>Ws2_32.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -367,7 +387,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(OutDir)..\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>gtest_main$(GoogleTestConfiguration).lib;gtest$(GoogleTestConfiguration).lib;Ws2_32.lib</AdditionalDependencies>
+      <AdditionalDependencies>Ws2_32.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

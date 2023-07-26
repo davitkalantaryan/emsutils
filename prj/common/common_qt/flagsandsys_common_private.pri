@@ -1,5 +1,5 @@
 #
-# repo:			cutils
+# repo:			cpputils
 # name:			flagsandsys_common_private.pri
 # path:			prj/common/common_qt/flagsandsys_common_private.pri
 # created on:   2023 Jun 21
@@ -10,10 +10,10 @@
 
 message("!!! $${PWD}/flagsandsys_common_private.pri")
 
-isEmpty(cutilsFlagsAndSysCommonPrivateIncluded){
-    cutilsFlagsAndSysCommonPrivateIncluded = 1
+isEmpty(cpputilsFlagsAndSysCommonPrivateIncluded){
+    cpputilsFlagsAndSysCommonPrivateIncluded = 1
 
 	include("$${PWD}/flagsandsys_common.pri")
 
-    INCLUDEPATH += $${cutilsRepoRoot}/src/include
+    INCLUDEPATH += $${cpputilsRepoRoot}/src/include
 }
