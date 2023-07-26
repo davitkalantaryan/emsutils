@@ -65,29 +65,3 @@ else
 fi
 source ./emsdk_env.sh
 export EMSDK_FOR_CPPUTILS_SET=1
-
-
-# $1 is target(lsbCode), $2 is configuration (Release,Debug)
-compileGoogleTest(){
-	#cd "${repositoryRoot}/contrib/googletest"
-	cd "${repositoryRoot}"
-	if [[ "$1" == "wasm" ]]; then
-		#emcmake cmake -H. -B../../build/googletest/$1/$2 -DCMAKE_BUILD_TYPE=$2
-		emcmake cmake -H. -Bbuild/googletest/$1/$2 -DCMAKE_BUILD_TYPE=$2
-	else
-		#cmake -H. -B../../build/googletest/$1/$2 -DCMAKE_BUILD_TYPE=$2
-		cmake -H. -Bbuild/googletest/$1/$2 -DCMAKE_BUILD_TYPE=$2
-	fi
-	#cd ../../build/googletest/$1/$2
-	cd build/googletest/$1/$2
-	cmake --build .
-	mkdir -p "${repositoryRoot}/sys/$1/$2/lib"
-	cp lib/*.a "${repositoryRoot}/sys/$1/$2/lib/".
-	rm -rf "${repositoryRoot}/contrib/googletest/googletest/generated"
-}
-
-# compile google test
-compileGoogleTest $lsbCode Release
-compileGoogleTest $lsbCode Debug
-compileGoogleTest wasm     Release
-compileGoogleTest wasm     Debug
