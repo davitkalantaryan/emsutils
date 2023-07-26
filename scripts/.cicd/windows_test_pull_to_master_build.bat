@@ -17,7 +17,7 @@ set ActionConfirm=Build
 
 set scriptName=%0
 set scriptDirectory=%~dp0
-cd /D "%scriptDirectory%.."
+cd /D "%scriptDirectory%..\.."
 set "repositoryRoot=%cd%\"
 echo repositoryRoot = %repositoryRoot%
 
