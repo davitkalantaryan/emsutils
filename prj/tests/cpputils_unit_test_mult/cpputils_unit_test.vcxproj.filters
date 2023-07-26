@@ -71,9 +71,6 @@
     <ClCompile Include="..\..\..\src\core\cpputils_inscopecleaner.cpp">
       <Filter>Source Files\core</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\core\cpputils_thread_local.cpp">
-      <Filter>Source Files\core</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\core\cpputils_core_emscripten.cpp">
       <Filter>Source Files\core</Filter>
     </ClCompile>
@@ -251,9 +248,6 @@
       <Filter>Header Files\incude\cpputils</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\cpputils\protecteddata.impl.hpp">
-      <Filter>Header Files\incude\cpputils</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\cpputils\thread_local.h">
       <Filter>Header Files\incude\cpputils</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\cpputils\tls_data.hpp">

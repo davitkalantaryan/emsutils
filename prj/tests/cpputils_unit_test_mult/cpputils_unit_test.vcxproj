@@ -52,7 +52,6 @@
     <ClCompile Include="..\..\..\src\core\cpputils_inscopecleaner.cpp" />
     <ClCompile Include="..\..\..\src\core\cpputils_multifor_c1.cpp" />
     <ClCompile Include="..\..\..\src\core\cpputils_mutex_ml.cpp" />
-    <ClCompile Include="..\..\..\src\core\cpputils_thread_local.cpp" />
     <ClCompile Include="..\..\..\src\core\cpputils_unnamedsemaphore.cpp" />
     <ClCompile Include="..\..\..\src\tests\unit_test\0000_initial.cpp" />
     <ClCompile Include="..\..\..\src\tests\unit_test\0001_hash.cpp" />
@@ -107,7 +106,6 @@
     <ClInclude Include="..\..\..\include\cpputils\protecteddata.impl.hpp" />
     <ClInclude Include="..\..\..\include\cpputils\sharedptr.hpp" />
     <ClInclude Include="..\..\..\include\cpputils\sharedptr.impl.hpp" />
-    <ClInclude Include="..\..\..\include\cpputils\thread_local.h" />
     <ClInclude Include="..\..\..\include\cpputils\tls_data.hpp" />
     <ClInclude Include="..\..\..\include\cpputils\tls_data.impl.hpp" />
     <ClInclude Include="..\..\..\include\cpputils\tls_ptr.posix.impl.hpp" />
