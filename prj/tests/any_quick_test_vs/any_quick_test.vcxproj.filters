@@ -42,9 +42,6 @@
     <ClCompile Include="..\..\..\src\core\cpputils_mutex_ml.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\core\cpputils_thread_local.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\core\cpputils_unnamedsemaphore.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

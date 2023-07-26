@@ -9,7 +9,7 @@
 #define INCLUDE_CPPUTILS_TLS_DATA_HPP
 
 #include <cpputils/export_symbols.h>
-#include <cpputils/thread_local.h>
+#include <cinternal/thread_local_sys.h>
 #include <stddef.h>
 
 namespace cpputils {
@@ -51,7 +51,7 @@ private:
 	static void CleanupFunction(void* data);
 	
 protected:
-	cpputils_thread_key_t	m_key;
+	CinternalTlsData	m_key;
 };
 
 
@@ -120,7 +120,7 @@ protected:
 	tls_data(bool){}
 	
 protected:
-	cpputils_thread_key_t	m_key;
+	CinternalTlsData	m_key;
 };
 
 // todo: implement this
