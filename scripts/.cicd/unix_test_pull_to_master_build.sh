@@ -40,8 +40,9 @@ elif [[ "$(expr substr $(uname -s) 1 5)" == "Linux" ]]; then
 #else
 fi
 
-cd ${repositoryRoot}/prj/tests/googletest_mult
+cd ${repositoryRoot}/prj/tests/cpputils_unit_test_mult
 unset CPPUTILS_DEBUG
-make -f unix.Makefile all
+make -f cpputils_unit_test.unix.Makefile all CPPUTILS_RELEASE=1
 # to make debug use line below
-make -f unix.Makefile all CPPUTILS_DEBUG=1
+unset CPPUTILS_RELEASE
+make -f cpputils_unit_test.unix.Makefile all CPPUTILS_DEBUG=1
