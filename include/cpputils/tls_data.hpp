@@ -93,7 +93,7 @@ private:
 	
 private:
 	pthread_mutex_t			m_mutex_for_list;
-	cpputils_thread_key_t	m_key;
+    CinternalTlsData        m_key;
 	struct TlsItem{
 		TlsItem *prev,*next;
 		DataType* pData;

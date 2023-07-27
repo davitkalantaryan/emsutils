@@ -76,7 +76,8 @@ TEST(f_0002_bigint, t0000_basic)
 
 TEST(f_0002_bigint, t0001_test_different_sizes)
 {
-	TestBigInteger<1>();
+    CINTERNAL_UNIT_TEST_IGNORE_ARGS();
+    TestBigInteger<1>();
 	TestBigInteger<2>();
 	TestBigInteger<3>();
 	TestBigInteger<4>();

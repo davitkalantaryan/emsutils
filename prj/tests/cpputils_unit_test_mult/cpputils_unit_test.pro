@@ -19,25 +19,22 @@ win32{
 	LIBS += -pthread
 }
 
-SRC_DIR=$${cpputilsRepoRoot}/src/tests/unit_test
 
 DEFINES += CINTERNAL_UNIT_TEST_USE_GTEST_LIKE_MACROSES
 
 
 SOURCES	+= $$files($${cpputilsRepoRoot}/src/core/*.cpp)  # I assume, that in core we will not have subdirs
-COMMON_HDRS	= $$files($${cpputilsRepoRoot}/include/*.h,true)
-COMMON_HDRSPP	= $$files($${cpputilsRepoRoot}/include/*.hpp,true)
+SOURCES += $$files($${cpputilsRepoRoot}/src/tests/unit_test/*.cpp)
 
-UNITTEST_SRCS	= $$files($${SRC_DIR}/*.cpp,true)
-UNITTEST_HDRS	= $$files($${SRC_DIR}/*.h,true)
-UNITTEST_HDRSPP	= $$files($${SRC_DIR}/*.hpp,true)
+SOURCES +=  \
+    "$${cinternalRepoRoot}/src/core/cinternal_core_logger.c"				\
+    "$${cinternalRepoRoot}/src/core/cinternal_core_unit_test_checks.c"			\
+    "$${cinternalRepoRoot}/src/core/cinternal_core_unit_test_main.c"
 
-SOURCES =  $$UNITTEST_SRCS
-SOURCES += $$COMMON_SRCS
-HEADERS =  $$UNITTEST_HDRS
-HEADERS += $$UNITTEST_HDRSPP
-HEADERS += $$COMMON_HDRS
-HEADERS += $$COMMON_HDRSPP
+
+
+HEADERS =  $$files($${cpputilsRepoRoot}/include/*.h,true)
+HEADERS += $$files($${cpputilsRepoRoot}/include/*.hpp,true)
 
 OTHER_FILES += $$files($${PWD}/*.Makefile)
 OTHER_FILES += "$${PWD}/packages.config.locked"

@@ -27,6 +27,7 @@
 #include <thread>
 #include <time.h>
 #include <stdlib.h>
+#include <stdio.h>
 #ifdef _WIN32
 #define sleep(_x)	Sleep(1000*(_x))
 #else
@@ -55,6 +56,7 @@ typedef cpputils::hashtbl::IntHash<int,int>	TypeMap;
 #endif
 
 CPPUTILS_BISTATE_FLAGS_UN_NM(
+
 	UnionName,
 	clockInEnabled,
 	keyStoringEnabled,
@@ -85,10 +87,12 @@ int main()
 		UnionName aUn;
 		aUn.wr_all = CPPUTILS_BISTATE_MAKE_ALL_BITS_FALSE;
 		aUn.wr.appMonitorEnabled = CPPUTILS_BISTATE_MAKE_BITS_FALSE;
+        printf("aUn.wr_all=%d\n",(int)aUn.wr_all);
 	}
 
 	{
 		CPPUTILS_BISTATE_FLAGS_UN(
+
 			clockInEnabled,
 			keyStoringEnabled,
 			appMonitorEnabled,
