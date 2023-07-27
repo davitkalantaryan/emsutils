@@ -45,20 +45,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config.locked">
-      <Filter>files</Filter>
-    </None>
-    <None Include="cpputils_unit_test.pro">
-      <Filter>files</Filter>
-    </None>
-    <None Include="cpputils_unit_test.unix.Makefile">
-      <Filter>files</Filter>
-    </None>
-    <None Include="cpputils_unit_test.windows.Makefile">
-      <Filter>files</Filter>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="..\..\..\src\core\cpputils_bigint.cpp">
       <Filter>Source Files\core</Filter>
     </ClCompile>
@@ -265,5 +251,16 @@
     <ClInclude Include="..\..\..\include\cpputils\unnamedsemaphore.hpp">
       <Filter>Header Files\incude\cpputils</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="emsutils_unit_test.pro">
+      <Filter>files</Filter>
+    </None>
+    <None Include="emsutils_unit_test.unix.Makefile">
+      <Filter>files</Filter>
+    </None>
+    <None Include="emsutils_unit_test.windows.Makefile">
+      <Filter>files</Filter>
+    </None>
   </ItemGroup>
 </Project>
