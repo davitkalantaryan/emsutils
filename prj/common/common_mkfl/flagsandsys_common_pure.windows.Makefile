@@ -1,9 +1,9 @@
 #
-# file:		windows.common.Makefile
+# repo:		cpputils
+# file:		flagsandsys_common_pure.windows.Makefile
 # created on:	2020 Dec 14
-# created by:	
-#
-# This file can be only as include
+# created by:	Davit Kalantaryan (davit.kalantaryan@desy.de)
+# purpose:	This file can be only as include
 #
 
 
@@ -11,12 +11,12 @@
 MakeFileDir			= $(MAKEDIR)
 !ENDIF
 
-!IFNDEF RepoRootDir
-RepoRootDir			= $(MakeFileDir)\..\..\..
+!IFNDEF cpputilsRepoRoot
+cpputilsRepoRoot	= $(MakeFileDir)\..\..\..
 !ENDIF
 
-!IFNDEF cpputilsRepoRoot
-cpputilsRepoRoot	= $(RepoRootDir)
+!IFNDEF artifactRoot
+artifactRoot	= $(cpputilsRepoRoot)
 !ENDIF
 
 CFLAGS				= $(CFLAGS) /I"$(cpputilsRepoRoot)\include"
