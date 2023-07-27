@@ -18,6 +18,7 @@ namespace cpputils { namespace hash {
 
 #ifdef _MSC_VER
 #pragma warning (disable:4820)  //  '4' bytes padding added after data ...
+#pragma warning (disable:4514)  //  unreferenced inline function has been removed
 #endif
 
 #define CPPUTILS_HASH_DEFAULT_TABLE_SIZE	256
