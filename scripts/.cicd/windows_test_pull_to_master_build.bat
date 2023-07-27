@@ -63,18 +63,12 @@ for %%p in (%PlatformTarget%) do (
 		echo "!!!!!!!!!!!! !!!!!!!!!!!! compiling for configuration %%c"
 		call msbuild "%repositoryRoot%workspaces\cpputils_all_vs\cpputils_all.sln" /t:!ActionConfirm! /p:Configuration=%%c /p:Platform=%%p
 		if not "!ERRORLEVEL!"=="0" (exit /b !ERRORLEVEL!)
-		call nmake -f cpputils_unit_test.windows.Makefile Platform=%%p Configuration=%%c
+		call nmake -f cpputils_unit_test.windows.Makefile /e Platform=%%p /e Configuration=%%c
 		if not "!ERRORLEVEL!"=="0" (exit /b !ERRORLEVEL!)
 	)
 )
 
-rem cd "%repositoryRoot%prj\tests\cpputils_unit_test_mult"
-rem if not "!ERRORLEVEL!"=="0" (exit /b !ERRORLEVEL!)
-rem call nmake -f cpputils_unit_test.windows.Makefile Platform=!Platform! Configuration=!Configuration!
-rem if not "!ERRORLEVEL!"=="0" (exit /b !ERRORLEVEL!)
-
 exit /b 0
-
 
 :parse_argument
 	set isNextArgPlatform=true
