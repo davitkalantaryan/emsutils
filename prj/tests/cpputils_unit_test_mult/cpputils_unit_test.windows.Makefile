@@ -1,77 +1,26 @@
 #
-# file:			Makefile (to create sss library)
-# created on:	2020 Dec 02
+# repo:		    cpputils
+# file:		    Makefile (to create sss library)
+# created on:	    2020 Dec 02
 # created by:	
 #
-# purpose:		To build DOOCS client library without EPICS
-# Examples of calling:
-#		>nmake /f windows.Makefile /e Platform=x64
-#		>nmake /f windows.Makefile /e Platform=x86
-#		>nmake /f windows.Makefile 
-#
-# Please specify any platform target from following list
-# arm
-# arm64
-# x64 
-# x86
-# Platform				= x64  # default
-# PlatformTarget	# will be specified automatically
-#
-# below is the variables, that should be specified by parent Makefile, before including this
-# TargetName				= libsss # this s defined by final makefile
-# CallerMakeFilePath		= XXX  # this one you can provide $(MAKEDIR)\makeFileName
-#
-# here are default values - will be set if parent Makefile does not specify them'
-# Platform				= x64  # default
-# ObjectsDirBase		= $(CallerMakeFileDir)\.objects
-# SourcesRootDir		= $(CallerMakeFileDir)
-#
-# @$(LINKER) $(LFLAGS) $(Objects) $(LIBS) /DLL $(LIBPATHS) /SUBSYSTEM:CONSOLE /OUT:$(TargetName).$(TargetExtension)
-#  {$(SrcBaseDir)\}.cpp{$(ObjectsDir)}.obj:
-#  @$(CPPC) /c $(CXXFLAGS) /Fo$(ObjectsDir)\$(@D)\ $(SrcBaseDir)\$*.cpp
-#  @$(CPPC) /c $(CXXFLAGS) /Fo$(ObjectsDir)\$(@D)\ $*.cpp
-#
-# to clean google test run below commands
-
-# one can redefine this by this nmake /e Platform=x86
-Platform			= x64
-Configuration			= Debug
 
 
-# this is set automatically when needed
-!IFNDEF MakeFileDir
-#!IF "$(MakeFileDir)" == ""
-MakeFileDir			= $(MAKEDIR)
-!ENDIF
 MakeFileName                    = cpputils_unit_test.windows.Makefile
-
-RepoRootDir			= $(MakeFileDir)\..\..\..
-cpputilsRepoRoot		= $(RepoRootDir)
-SrcBaseDir			= $(MakeFileDir)\..\..\..\src
-
 TargetName			= cpputils_unit_test
 TargetExtension			= exe
 TargetCategory                  = test
 
+# this is set automatically when needed
+!IFNDEF MakeFileDir
+MakeFileDir			= $(MAKEDIR)
+!ENDIF
+
+
 LINKER        			= link
-PDB_FILE_PATH			= $(TargetDirectory)\$(TargetName).pdb
-DEFINES       			= $(DEFINES) /D "_WINDLL" /D "_MBCS" /D "CPPUTILS_USING_STATIC_LIB_OR_OBJECTS"
-CFLAGS				= $(CFLAGS) $(INCLUDE_PATHS) $(DEFINES)
-CFLAGS				= $(CFLAGS) /D "CINTERNAL_UNIT_TEST_USE_GTEST_LIKE_MACROSES"
-CXXFLAGS			= $(CXXFLAGS) $(CFLAGS)
+DEFINES       			= $(DEFINES) /D "_WINDLL" /D "_MBCS" /D "CINTERNAL_UNIT_TEST_USE_GTEST_LIKE_MACROSES"
 
-LIBPATHS			= $(LIBPATHS) /LIBPATH:"$(RepoRootDir)\sys\win_$(Platform)\$(Configuration)\lib"
-LIBS				=
-LIBS				= $(LIBS) "gtest_main$(LibrariesExtension).lib"
-LIBS				= $(LIBS) "gtest$(LibrariesExtension).lib"
 LIBS				= $(LIBS) "Ws2_32.lib"
-
-LFLAGS				= $(LFLAGS) /OUT:"$(TargetDirectory)\$(TargetFileName)" 
-LFLAGS				= $(LFLAGS) /MANIFEST /NXCOMPAT /PDB:"$(TargetDirectory)\$(TargetName).pdb" 
-LFLAGS				= $(LFLAGS) /DYNAMICBASE $(LIBS) 
-LFLAGS				= $(LFLAGS) /DEBUG /MACHINE:$(Platform) /INCREMENTAL  
-LFLAGS				= $(LFLAGS) /SUBSYSTEM:CONSOLE /MANIFESTUAC:"level='asInvoker' uiAccess='false'" 
-LFLAGS				= $(LFLAGS) /ERRORREPORT:PROMPT /NOLOGO $(LIBPATHS) /TLBID:1
 
 Objects			=	..\contrib\cinternal\src\core\cinternal_core_unit_test_checks.x64_d_obj
 Objects			=	$(Objects) ..\contrib\cinternal\src\core\cinternal_core_unit_test_main.x64_d_obj
