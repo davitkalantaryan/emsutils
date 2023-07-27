@@ -1,5 +1,6 @@
 //
-// file:			cpputils_core_emscripten.cpp
+// repo:            emsutils
+// file:			emsutils_core_emscripten.cpp
 // path:			src/core/cpputils_core_emscripten.cpp
 // created on:		2022 Feb 09
 // created by:		Davit Kalantaryan (davit.kalantaryan@gmail.com)
@@ -7,7 +8,7 @@
 // remember alert("The URL of this page is: " + window.location.href); makes alert for browser, that can be used in the future
 //
 
-#include <cpputils/emscripten.hpp>
+#include <emsutils/emscripten.hpp>
 
 
 #ifdef CPPUTILS_EMSCRIPTEN_IS_USED
@@ -36,7 +37,7 @@ CPPUTILS_END_C
 #endif  // #ifdef CPPUTILS_EMSCRIPTEN_IS_USED
 
 
-namespace cpputils { namespace emscripten {    
+namespace emsutils {
 
 #ifdef CPPUTILS_EMSCRIPTEN_IS_USED
 
@@ -68,7 +69,7 @@ EM_JS(void, get_base_url_str2, (const char*, char* a_buff, int a_bufLen), {
 //}
 
 
-CPPUTILS_EXPORT ::std::string  get_base_url_str(const ::std::string&)
+EMSUTILS_EXPORT ::std::string  get_base_url_str(const ::std::string&)
 {
     char* pcBaseUrl = (char*)EM_ASM_INT({
         var jsString = window.location.href;
@@ -86,7 +87,7 @@ CPPUTILS_EXPORT ::std::string  get_base_url_str(const ::std::string&)
 
 
 
-CPPUTILS_EXPORT void mount_idbfs_file_system(const char* a_cpcMountPoint, const FsSyncClbk& a_clbk, void* a_pData)
+EMSUTILS_EXPORT void mount_idbfs_file_system(const char* a_cpcMountPoint, const FsSyncClbk& a_clbk, void* a_pData)
 {
     CpputilsFsSyncSClbkData aClbk({a_clbk,a_pData});
     EM_ASM({
@@ -108,7 +109,7 @@ CPPUTILS_EXPORT void mount_idbfs_file_system(const char* a_cpcMountPoint, const 
 }
 
 
-CPPUTILS_EXPORT void fs_sync(void)
+EMSUTILS_EXPORT void fs_sync(void)
 {
     EM_ASM({
         FS.syncfs(false,function (err) {
@@ -122,25 +123,25 @@ CPPUTILS_EXPORT void fs_sync(void)
 #else   //  #ifdef CPPUTILS_EMSCRIPTEN_IS_USED
 
 
-extern "C" CPPUTILS_EXPORT void  get_base_url_str2(const char* a_hint, char* a_buff, int a_bufLen)
+extern "C" EMSUTILS_EXPORT void  get_base_url_str2(const char* a_hint, char* a_buff, int a_bufLen)
 {
     :: strncpy(a_buff,a_hint,static_cast<size_t>(a_bufLen));
 }
 
 
-CPPUTILS_EXPORT ::std::string  get_base_url_str(const ::std::string& a_hint)
+EMSUTILS_EXPORT ::std::string  get_base_url_str(const ::std::string& a_hint)
 {
     return a_hint;
 }
 
 
-CPPUTILS_EXPORT void mount_idbfs_file_system(const char*, const FsSyncClbk& a_clbk, void* a_pData)
+EMSUTILS_EXPORT void mount_idbfs_file_system(const char*, const FsSyncClbk& a_clbk, void* a_pData)
 {
     a_clbk(a_pData);
 }
 
 
-CPPUTILS_EXPORT void fs_sync(void)
+EMSUTILS_EXPORT void fs_sync(void)
 {
 }
 
@@ -148,7 +149,7 @@ CPPUTILS_EXPORT void fs_sync(void)
 #endif   //  #ifdef CPPUTILS_EMSCRIPTEN_IS_USED
 
 
-}}  // namespace cpputils { namespace emscripten {
+}  //  namespace emsutils {
 
 
 #ifdef CPPUTILS_EMSCRIPTEN_IS_USED

@@ -10,7 +10,7 @@ static int s_handler_execution_number = 2;
 
 TEST(f_0000_initial, t0000_first)
 {
-	printf("Tests to test CPP utils started!\n");
+	printf("Tests to test EMS utils started!\n");
 	EXPECT_EQ(s_handler_execution_number, 2);
 
 }

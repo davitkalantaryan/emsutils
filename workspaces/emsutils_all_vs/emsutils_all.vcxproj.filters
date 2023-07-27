@@ -130,7 +130,7 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\utils\entry_cpputils_all.cpp">
+    <ClCompile Include="..\..\src\utils\entry_emsutils_all.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
