@@ -5,8 +5,10 @@
 
 #include <cinternal/unit_test.h>
 #include <cinternal/macroses.h>
-#include <string>
 #include <stdarg.h>
+#include <cinternal/disable_compiler_warnings.h>
+#include <string>
+#include <cinternal/undisable_compiler_warnings.h>
 
 #define ARGS_TO_NUM_AND_STRS(...)	CPPUTILS_NARGS(__VA_ARGS__), CPPUTILS_NAMES(__VA_ARGS__)
 

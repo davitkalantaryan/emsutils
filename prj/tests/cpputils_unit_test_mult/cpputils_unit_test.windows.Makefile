@@ -1,46 +1,35 @@
 #
-# repo:		    cpputils
-# file:		    Makefile (to create sss library)
+# repo:				cpputils
+# file:				cpputils_unit_test.windows.Makefile
 # created on:	    2020 Dec 02
-# created by:	
+# created by:		Davit Kalantaryan (davit.kalantaryan@desy.de)
 #
 
 
-MakeFileName                    = cpputils_unit_test.windows.Makefile
-TargetName			= cpputils_unit_test
+MakeFileName            = cpputils_unit_test.windows.Makefile
+MakeFileDir				= $(MAKEDIR)
+TargetName				= cpputils_unit_test
 TargetExtension			= exe
-TargetCategory                  = test
+TargetCategory          = test
+SrcBaseDir				= $(MakeFileDir)\..\..\..\src
 
-# this is set automatically when needed
-!IFNDEF MakeFileDir
-MakeFileDir			= $(MAKEDIR)
-!ENDIF
+DEFINES       			= /D "CINTERNAL_UNIT_TEST_USE_GTEST_LIKE_MACROSES"
+LIBS					= $(LIBS) "Ws2_32.lib"
+LFLAGS					= $(LFLAGS) /SUBSYSTEM:CONSOLE
 
-
-LINKER        			= link
-DEFINES       			= $(DEFINES) /D "_WINDLL" /D "_MBCS" /D "CINTERNAL_UNIT_TEST_USE_GTEST_LIKE_MACROSES"
-
-LIBS				= $(LIBS) "Ws2_32.lib"
-
-Objects			=	..\contrib\cinternal\src\core\cinternal_core_unit_test_checks.x64_d_obj
-Objects			=	$(Objects) ..\contrib\cinternal\src\core\cinternal_core_unit_test_main.x64_d_obj
-Objects			=	$(Objects) ..\contrib\cinternal\src\core\cinternal_core_logger.x64_d_obj
+Objects					=	..\contrib\cinternal\src\core\cinternal_core_unit_test_checks.$(Platform)_$(ObjectsExtension)_obj
+Objects					=	$(Objects) ..\contrib\cinternal\src\core\cinternal_core_unit_test_main.$(Platform)_$(ObjectsExtension)_obj
+Objects					=	$(Objects) ..\contrib\cinternal\src\core\cinternal_core_logger.$(Platform)_$(ObjectsExtension)_obj
 
 
 #SourcesToCompile	=
 #DirectoriesToCompile	= $(DirectoriesToCompile) nr-build\gen\cpp\sss\ssslang\antlr
 DirectoriesToCompile	=
-DirectoriesToCompile	= tests\googletest
+DirectoriesToCompile	= tests\unit_test
 DirectoriesToCompile	= $(DirectoriesToCompile) core
 
-default: googletest
+default: unittest
 
+unittest: __preparationForSetObjects __setObjects
 
-googletest: __preparationForSetObjects __setObjects
-
-
-__buildGoogleTestLib:
-	@cd $(MakeFileDir)
-	@echo "!!!!!! 'msbuild -t:restore -p:RestorePackagesConfig=true' is not necessary anymore"
-
-!include <$(RepoRootDir)\prj\common\common_mkfl\flagsandsys_common_private.windows.Makefile>
+!include <$(MakeFileDir)\..\..\common\common_mkfl\flagsandsys_common_private.windows.Makefile>

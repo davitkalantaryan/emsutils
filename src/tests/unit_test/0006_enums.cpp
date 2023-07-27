@@ -5,7 +5,9 @@
 
 #include <cinternal/unit_test.h>
 #include <cpputils/enums.hpp>
+#include <cinternal/disable_compiler_warnings.h>
 #include <iostream>
+#include <cinternal/undisable_compiler_warnings.h>
 
 #ifndef CPPUTILS_ENUM_FULL
 #define CPPUTILS_ENUM_FULL	CPPUTILS_ENUM
