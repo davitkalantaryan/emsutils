@@ -48,7 +48,6 @@ MakeFileName                    = cpputils_unit_test.windows.Makefile
 RepoRootDir			= $(MakeFileDir)\..\..\..
 cpputilsRepoRoot		= $(RepoRootDir)
 SrcBaseDir			= $(MakeFileDir)\..\..\..\src
-GoogleTestDir			= $(RepoRootDir)\contrib\googletest
 
 TargetName			= cpputils_unit_test
 TargetExtension			= exe
@@ -57,9 +56,6 @@ TargetCategory                  = test
 LINKER        			= link
 PDB_FILE_PATH			= $(TargetDirectory)\$(TargetName).pdb
 DEFINES       			= $(DEFINES) /D "_WINDLL" /D "_MBCS" /D "CPPUTILS_USING_STATIC_LIB_OR_OBJECTS"
-INCLUDE_PATHS			= $(INCLUDE_PATHS) /I"$(GoogleTestDir)\googletest\include"
-INCLUDE_PATHS			= $(INCLUDE_PATHS) /I"$(RepoRootDir)\include"
-INCLUDE_PATHS			= $(INCLUDE_PATHS) /I"$(RepoRootDir)\contrib\cinternal\include"
 CFLAGS				= $(CFLAGS) $(INCLUDE_PATHS) $(DEFINES)
 CFLAGS				= $(CFLAGS) /D "CINTERNAL_UNIT_TEST_USE_GTEST_LIKE_MACROSES"
 CXXFLAGS			= $(CXXFLAGS) $(CFLAGS)
@@ -76,6 +72,10 @@ LFLAGS				= $(LFLAGS) /DYNAMICBASE $(LIBS)
 LFLAGS				= $(LFLAGS) /DEBUG /MACHINE:$(Platform) /INCREMENTAL  
 LFLAGS				= $(LFLAGS) /SUBSYSTEM:CONSOLE /MANIFESTUAC:"level='asInvoker' uiAccess='false'" 
 LFLAGS				= $(LFLAGS) /ERRORREPORT:PROMPT /NOLOGO $(LIBPATHS) /TLBID:1
+
+Objects			=	..\contrib\cinternal\src\core\cinternal_core_unit_test_checks.x64_d_obj
+Objects			=	$(Objects) ..\contrib\cinternal\src\core\cinternal_core_unit_test_main.x64_d_obj
+Objects			=	$(Objects) ..\contrib\cinternal\src\core\cinternal_core_logger.x64_d_obj
 
 
 #SourcesToCompile	=
