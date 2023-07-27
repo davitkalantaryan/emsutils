@@ -13,7 +13,7 @@ cd /D %scriptDirectory%..\..
 set "repositoryRoot=%cd%\"
 
 cd "%repositoryRoot%sys\win_%Platform%\%Configuration%\test"
-.\unittest.exe
+.\cpputils_unit_test.exe
 
 exit /b !ERRORLEVEL!
 

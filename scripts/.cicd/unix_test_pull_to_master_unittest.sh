@@ -42,4 +42,4 @@ elif [[ "$(expr substr $(uname -s) 1 5)" == "Linux" ]]; then
 fi
 
 cd ${repositoryRoot}/sys/${lsbCode}/${Configuration}/test
-./unittest
+./cpputils_unit_test
