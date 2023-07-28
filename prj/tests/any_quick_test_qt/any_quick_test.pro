@@ -1,4 +1,5 @@
 #
+# repo:			emsutils
 # file:			any_quick_test.pro
 # path:			prj/tests/any_quick_test_qt/any_quick_test.pro
 # created on:	2021 Mar 07
@@ -24,10 +25,7 @@ win32{
 
 SOURCES	+=		\
 	"$${PWD}/../../../src/tests/main_any_quick_test.cpp"			\
-	"$${PWD}/../../../src/core/cpputils_bigint.cpp"				\
-	"$${PWD}/../../../src/core/cpputils_functional_old.cpp"			\
-	"$${PWD}/../../../src/core/cpputils_hashtbl.cpp"			\
-	"$${PWD}/../../../src/core/cpputils_inscopecleaner.cpp"
+	"$${PWD}/../../../src/core/emsutils_core_emscripten.cpp"	
 
-HEADERS += $$files($${cpputilsRepoRoot}/include/*.h,true)
-HEADERS += $$files($${cpputilsRepoRoot}/include/*.hpp,true)
+HEADERS += $$files($${emsutilsRepoRoot}/include/*.h,true)
+HEADERS += $$files($${emsutilsRepoRoot}/include/*.hpp,true)

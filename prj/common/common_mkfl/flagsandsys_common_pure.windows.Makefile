@@ -11,12 +11,12 @@
 MakeFileDir			= $(MAKEDIR)
 !ENDIF
 
-!IFNDEF cpputilsRepoRoot
-cpputilsRepoRoot	= $(MakeFileDir)\..\..\..
+!IFNDEF emsutilsRepoRoot
+emsutilsRepoRoot	= $(MakeFileDir)\..\..\..
 !ENDIF
 
 !IFNDEF artifactRoot
-artifactRoot	= $(cpputilsRepoRoot)
+artifactRoot	= $(emsutilsRepoRoot)
 !ENDIF
 
-CFLAGS				= $(CFLAGS) /I"$(cpputilsRepoRoot)\include"
+CFLAGS				= $(CFLAGS) /I"$(emsutilsRepoRoot)\include"

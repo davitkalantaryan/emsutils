@@ -1,5 +1,6 @@
 #
-# file:			cpputils_unit_test.pro
+# repo:         emsutils
+# file:			emsutils_unit_test.pro
 # path:			prj/tests/cpputils_unit_test_mult/cpputils_unit_test.pro
 # created on:	2021 Mar 27
 # created by:	Davit Kalantaryan
@@ -25,8 +26,8 @@ win32{
 DEFINES += CINTERNAL_UNIT_TEST_USE_GTEST_LIKE_MACROSES
 
 
-SOURCES	+= $$files($${cpputilsRepoRoot}/src/core/*.cpp)  # I assume, that in core we will not have subdirs
-SOURCES += $$files($${cpputilsRepoRoot}/src/tests/unit_test/*.cpp)
+SOURCES	+= $$files($${emsutilsRepoRoot}/src/core/*.cpp)  # I assume, that in core we will not have subdirs
+SOURCES += $$files($${emsutilsRepoRoot}/src/tests/unit_test/*.cpp)
 
 SOURCES +=  \
     "$${cinternalRepoRoot}/src/core/cinternal_core_logger.c"				\
@@ -35,8 +36,7 @@ SOURCES +=  \
 
 
 
-HEADERS =  $$files($${cpputilsRepoRoot}/include/*.h,true)
-HEADERS += $$files($${cpputilsRepoRoot}/include/*.hpp,true)
+HEADERS =  $$files($${emsutilsRepoRoot}/include/*.h,true)
+HEADERS += $$files($${emsutilsRepoRoot}/include/*.hpp,true)
 
 OTHER_FILES += $$files($${PWD}/*.Makefile)
-OTHER_FILES += "$${PWD}/packages.config.locked"

@@ -7,13 +7,13 @@
 #
 
 
-!IFNDEF cpputilsRepoRoot
-cpputilsRepoRoot	= $(MAKEDIR)\..\..\..
+!IFNDEF emsutilsRepoRoot
+emsutilsRepoRoot	= $(MAKEDIR)\..\..\..
 !ENDIF
-!include <$(cpputilsRepoRoot)\prj\common\common_mkfl\flagsandsys_common_pure.windows.Makefile>
+!include <$(emsutilsRepoRoot)\prj\common\common_mkfl\flagsandsys_common_pure.windows.Makefile>
 
 
 !IFNDEF cinternalRepoRoot
-cinternalRepoRoot	= $(cpputilsRepoRoot)\contrib\cinternal
+cinternalRepoRoot	= $(emsutilsRepoRoot)\contrib\cinternal
 !ENDIF
 !include <$(cinternalRepoRoot)\prj\common\common_mkfl\flagsandsys_common_pure.windows.Makefile>

@@ -1,5 +1,5 @@
 #
-# repo:			cpputils
+# repo:			emsutils
 # name:			flagsandsys_common.pri
 # path:			prj/common/common_qt/flagsandsys_common.pri
 # created on:   2023 Jun 21
@@ -10,18 +10,18 @@
 
 message("!!! $${PWD}/flagsandsys_common.pri")
 
-isEmpty(cpputilsFlagsAndSysCommonIncluded){
-    cpputilsFlagsAndSysCommonIncluded = 1
+isEmpty(emsutilsFlagsAndSysCommonIncluded){
+    emsutilsFlagsAndSysCommonIncluded = 1
 
-    cpputilsRepoRoot = $${PWD}/../../..
-	include("$${cpputilsRepoRoot}/contrib/cinternal/prj/common/common_qt/flagsandsys_common.pri")
+    emsutilsRepoRoot = $${PWD}/../../..
+	include("$${emsutilsRepoRoot}/contrib/cinternal/prj/common/common_qt/flagsandsys_common.pri")
 
     isEmpty(artifactRoot) {
         artifactRoot = $$(artifactRoot)
 		isEmpty(artifactRoot) {
-			artifactRoot = $${cpputilsRepoRoot}
+			artifactRoot = $${emsutilsRepoRoot}
 		}
     }
 
-    INCLUDEPATH += $${cpputilsRepoRoot}/include
+    INCLUDEPATH += $${emsutilsRepoRoot}/include
 }

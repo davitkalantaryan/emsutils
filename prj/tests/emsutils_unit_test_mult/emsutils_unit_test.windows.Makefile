@@ -1,14 +1,14 @@
 #
-# repo:				cpputils
-# file:				cpputils_unit_test.windows.Makefile
+# repo:				emsutils
+# file:				emsutils_unit_test.windows.Makefile
 # created on:	    2020 Dec 02
 # created by:		Davit Kalantaryan (davit.kalantaryan@desy.de)
 #
 
 
-MakeFileName            = cpputils_unit_test.windows.Makefile
+MakeFileName            = emsutils_unit_test.windows.Makefile
 MakeFileDir				= $(MAKEDIR)
-TargetName				= cpputils_unit_test_mkfl
+TargetName				= emsutils_unit_test_mkfl
 TargetExtension			= exe
 TargetCategory          = test
 SrcBaseDir				= $(MakeFileDir)\..\..\..\src
