@@ -29,3 +29,5 @@ SOURCES	+=		\
 
 HEADERS += $$files($${emsutilsRepoRoot}/include/*.h,true)
 HEADERS += $$files($${emsutilsRepoRoot}/include/*.hpp,true)
+
+OTHER_FILES += $$files($${PWD}/../any_quick_test_mkfl/*.Makefile,false)
