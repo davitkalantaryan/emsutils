@@ -131,11 +131,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="..\..\CMakeLists.txt">
-      <Filter>repo_files</Filter>
-    </Text>
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="..\..\src\utils\entry_emsutils_all.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

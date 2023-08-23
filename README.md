@@ -1,4 +1,4 @@
-# cpputils
+# emsutils
 Repository for some general purpose classes and macroses. 
 Up to now these classes and macroses are tested on gcc Linux, Windows microsoft compiler, Mac with clang and emscripten. 
 Should work also on other platforms with proper c++ compiler
