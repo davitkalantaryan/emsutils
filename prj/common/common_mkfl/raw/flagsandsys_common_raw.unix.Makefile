@@ -9,7 +9,7 @@
 ifndef emsutilsRepoRoot
         mkfile_path		=  $(abspath $(lastword $(MAKEFILE_LIST)))
         mkfile_dir		=  $(shell dirname $(mkfile_path))
-        emsutilsRepoRoot	:= $(shell curDir=`pwd` && cd $(mkfile_dir)/../../.. && pwd && cd ${curDir})
+        emsutilsRepoRoot	:= $(shell curDir=`pwd` && cd $(mkfile_dir)/../../../.. && pwd && cd ${curDir})
 endif
 
 ifndef artifactRoot
