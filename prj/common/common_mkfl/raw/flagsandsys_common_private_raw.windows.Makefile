@@ -7,8 +7,8 @@
 #
 
 !IFNDEF emsutilsRepoRoot
-emsutilsRepoRoot	= $(MAKEDIR)\..\..\..
+emsutilsRepoRoot	= $(MAKEDIR)\..\..\..\..
 !ENDIF
-!include <$(emsutilsRepoRoot)\prj\common\common_mkfl\flagsandsys_common_pure.windows.Makefile>
+!include <$(emsutilsRepoRoot)\prj\common\common_mkfl\flagsandsys_common.windows.Makefile>
 
 CFLAGS				= $(CFLAGS) /I"$(cpputilsRepoRoot)\src\include"

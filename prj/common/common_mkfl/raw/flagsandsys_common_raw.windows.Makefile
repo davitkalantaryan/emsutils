@@ -8,7 +8,7 @@
 
 
 !IFNDEF MakeFileDir
-MakeFileDir			= $(MAKEDIR)
+MakeFileDir			= $(MAKEDIR)\..
 !ENDIF
 
 !IFNDEF emsutilsRepoRoot
@@ -19,4 +19,9 @@ emsutilsRepoRoot	= $(MakeFileDir)\..\..\..
 artifactRoot	= $(emsutilsRepoRoot)
 !ENDIF
 
+!IFNDEF cinternalRepoRoot
+cinternalRepoRoot	= $(emsutilsRepoRoot)\contrib\cinternal
+!ENDIF
+
+!include <$(cinternalRepoRoot)\prj\common\common_mkfl\flagsandsys_common.windows.Makefile>
 CFLAGS				= $(CFLAGS) /I"$(emsutilsRepoRoot)\include"

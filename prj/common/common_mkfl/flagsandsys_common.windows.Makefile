@@ -6,14 +6,10 @@
 # purpose:	This file can be only as include
 #
 
-
+!IFNDEF emsutilsFlagsAndSysCommonIncluded
+emsutilsFlagsAndSysCommonIncluded		= 1
 !IFNDEF emsutilsRepoRoot
 emsutilsRepoRoot	= $(MAKEDIR)\..\..\..
 !ENDIF
-!include <$(emsutilsRepoRoot)\prj\common\common_mkfl\flagsandsys_common_pure.windows.Makefile>
-
-
-!IFNDEF cinternalRepoRoot
-cinternalRepoRoot	= $(emsutilsRepoRoot)\contrib\cinternal
+!include <$(emsutilsRepoRoot)\prj\common\common_mkfl\raw\flagsandsys_common_raw.windows.Makefile>
 !ENDIF
-!include <$(cinternalRepoRoot)\prj\common\common_mkfl\flagsandsys_common_pure.windows.Makefile>
