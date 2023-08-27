@@ -11,4 +11,4 @@ emsutilsRepoRoot	= $(MAKEDIR)\..\..\..\..
 !ENDIF
 !include <$(emsutilsRepoRoot)\prj\common\common_mkfl\flagsandsys_common.windows.Makefile>
 
-CFLAGS				= $(CFLAGS) /I"$(cpputilsRepoRoot)\src\include"
+CFLAGS				= $(CFLAGS) /I"$(emsutilsRepoRoot)\src\include"
