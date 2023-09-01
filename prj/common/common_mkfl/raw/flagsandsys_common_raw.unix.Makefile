@@ -19,3 +19,6 @@ endif
 include $(emsutilsRepoRoot)/contrib/cinternal/prj/common/common_mkfl/flagsandsys_common.unix.Makefile
 
 COMMON_FLAGS	+= -I$(emsutilsRepoRoot)/include
+
+LIBS	+= -L$(emsutilsRepoRoot)/sys/$(lsbCode)/$(Configuration)/lib
+LIBS	+= -L$(emsutilsRepoRoot)/sys/$(lsbCode)/$(Configuration)/tlib

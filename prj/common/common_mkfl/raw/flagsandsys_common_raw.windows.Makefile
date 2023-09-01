@@ -24,4 +24,8 @@ cinternalRepoRoot	= $(emsutilsRepoRoot)\contrib\cinternal
 !ENDIF
 
 !include <$(cinternalRepoRoot)\prj\common\common_mkfl\flagsandsys_common.windows.Makefile>
+
 CFLAGS				= $(CFLAGS) /I"$(emsutilsRepoRoot)\include"
+
+LFLAGS				= $(LFLAGS) /LIBPATH:"$(emsutilsRepoRoot)\sys\win_$(Platform)\$(Configuration)\lib"
+LFLAGS				= $(LFLAGS) /LIBPATH:"$(emsutilsRepoRoot)\sys\win_$(Platform)\$(Configuration)\tlib"

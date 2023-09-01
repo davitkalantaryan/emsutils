@@ -24,4 +24,9 @@ isEmpty(emsutilsFlagsAndSysCommonIncluded){
     }
 
     INCLUDEPATH += $${emsutilsRepoRoot}/include
+
+    LIBS	+= -L$${emsutilsRepoRoot}/sys/$${CODENAME}/$$CONFIGURATION/lib
+    LIBS	+= -L$${emsutilsRepoRoot}/sys/$${CODENAME}/$$CONFIGURATION/tlib
+
+    OTHER_FILES += $$files($${PWD}/../common_mkfl/*.Makefile,true)
 }
