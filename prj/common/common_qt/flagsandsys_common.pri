@@ -14,14 +14,15 @@ isEmpty(emsutilsFlagsAndSysCommonIncluded){
     emsutilsFlagsAndSysCommonIncluded = 1
 
     emsutilsRepoRoot = $${PWD}/../../..
-	include("$${emsutilsRepoRoot}/contrib/cinternal/prj/common/common_qt/flagsandsys_common.pri")
 
     isEmpty(artifactRoot) {
         artifactRoot = $$(artifactRoot)
-		isEmpty(artifactRoot) {
-			artifactRoot = $${emsutilsRepoRoot}
+	        isEmpty(artifactRoot) {
+		        artifactRoot = $${emsutilsRepoRoot}
 		}
     }
+
+    include("$${emsutilsRepoRoot}/contrib/cinternal/prj/common/common_qt/flagsandsys_common.pri")
 
     INCLUDEPATH += $${emsutilsRepoRoot}/include
 
