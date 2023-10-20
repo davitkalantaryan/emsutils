@@ -22,8 +22,8 @@ do
 	fileOrigin=`readlink "${scriptFileName}"`  || :
 done
 cd ..
-repositoryRoot=`pwd`
-echo repositoryRoot=$repositoryRoot
+emsutilsRepoRoot=`pwd`
+echo emsutilsRepoRoot=$emsutilsRepoRoot
 
 # thanks to https://stackoverflow.com/questions/3466166/how-to-check-if-running-in-cygwin-mac-or-linux
 if [[ "$(uname)" == "Darwin" ]]; then
@@ -54,13 +54,13 @@ if [ -z "$emSdkVersion" ]; then
 	#emSdkVersion=2.0.14  # this is for 5.15
 	emSdkVersion=3.1.25  # this is for 6.5
 fi
-if [[ ! -f "${repositoryRoot}/contrib/emsdk_version_${emSdkVersion}_prepared" ]]; then
-	cd "${repositoryRoot}/contrib/emsdk"
+if [[ ! -f "${emsutilsRepoRoot}/contrib/emsdk_version_${emSdkVersion}_prepared" ]]; then
+	cd "${emsutilsRepoRoot}/contrib/emsdk"
 	./emsdk install ${emSdkVersion}
 	./emsdk activate ${emSdkVersion}
-	touch "${repositoryRoot}/contrib/emsdk_version_${emSdkVersion}_prepared"
+	touch "${emsutilsRepoRoot}/contrib/emsdk_version_${emSdkVersion}_prepared"
 else
-	cd "${repositoryRoot}/contrib/emsdk"
+	cd "${emsutilsRepoRoot}/contrib/emsdk"
 	echo "emsdk already prepared for this repository"
 fi
 
