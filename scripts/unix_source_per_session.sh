@@ -53,10 +53,10 @@ makeMainJob (){
 			;;
 	esac
 	
-	if [ -z "$EMSDK_FOR_EMSUTILS_SET" ]
+	if [ -z "$EMSDK_FOR_EMSUTILS_SET03" ]
 	then
-	      source ${repositoryRoot}/contrib/emsdk/emsdk_env.sh
-		  export $EMSDK_FOR_EMSUTILS_SET=1
+	    source ${emsutilsRepoRoot}/contrib/emsdk/emsdk_env.sh
+	    export EMSDK_FOR_EMSUTILS_SET03=1
 	else
 	      echo "emscriptian already inited"
 	fi
