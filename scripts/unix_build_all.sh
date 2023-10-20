@@ -21,14 +21,10 @@ do
 	cd "${scriptDirectory}"
 	fileOrigin=`readlink "${scriptFileName}"`  || :
 done
-cd ..
-repositoryRoot=`pwd`
-echo repositoryRoot=$repositoryRoot
 
-#source ${scriptDirectory}/unix_source_per_session.sh ${scriptDirectory}/unix_source_per_session.sh ${scriptDirectory}/unix_source_per_session.sh
-source ${repositoryRoot}/scripts/unix_source_per_session.sh ${repositoryRoot}/scripts/unix_source_per_session.sh ${repositoryRoot}/scripts/unix_source_per_session.sh
+source ${scriptDirectory}/unix_source_per_session.sh ${scriptDirectory}/unix_source_per_session.sh ${scriptDirectory}/unix_source_per_session.sh
 
-cd workspaces/emsutils_all_mkfl
+cd ${emsutilsRepoRoot}/workspaces/emsutils_all_mkfl
 unset CPPUTILS_DEBUG
 make -f emsutils_all.unix.Makefile CPPUTILS_RELEASE=1
 unset CPPUTILS_RELEASE

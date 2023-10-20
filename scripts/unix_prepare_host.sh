@@ -22,7 +22,7 @@ do
 	fileOrigin=`readlink "${scriptFileName}"`  || :
 done
 cd ..
-repositoryRoot=`pwd`
-echo repositoryRoot=$repositoryRoot
+emsutilsRepoRoot=`pwd`
+echo emsutilsRepoRoot=$emsutilsRepoRoot
 
 ./contrib/cinternal/scripts/unix_prepare_host.sh
