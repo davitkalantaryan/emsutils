@@ -62,4 +62,4 @@ else
 	echo "emsdk already prepared for this repository"
 fi
 
-source ${scriptDirectory}/unix_source_per_session.sh ${scriptDirectory}/unix_source_per_session.sh ${scriptDirectory}/unix_source_per_session.sh
+#source ${repositoryRoot}/scripts/unix_source_per_session.sh ${repositoryRoot}/scripts/unix_source_per_session.sh ${repositoryRoot}/scripts/unix_source_per_session.sh

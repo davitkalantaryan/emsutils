@@ -21,12 +21,12 @@ do
 	cd "${scriptDirectory}"
 	fileOrigin=`readlink "${scriptFileName}"`  || :
 done
-
-source ${scriptDirectory}/unix_source_per_session.sh ${scriptDirectory}/unix_source_per_session.sh ${scriptDirectory}/unix_source_per_session.sh
-
 cd ..
 repositoryRoot=`pwd`
 echo repositoryRoot=$repositoryRoot
+
+#source ${scriptDirectory}/unix_source_per_session.sh ${scriptDirectory}/unix_source_per_session.sh ${scriptDirectory}/unix_source_per_session.sh
+source ${repositoryRoot}/scripts/unix_source_per_session.sh ${repositoryRoot}/scripts/unix_source_per_session.sh ${repositoryRoot}/scripts/unix_source_per_session.sh
 
 
 # https://intoli.com/blog/exit-on-errors-in-bash-scripts/
