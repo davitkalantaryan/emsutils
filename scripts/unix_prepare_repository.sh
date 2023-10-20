@@ -44,6 +44,8 @@ fi
 git submodule sync --recursive
 git submodule update --init --recursive
 
+./contrib/cinternal/scripts/unix_prepare_repository.sh
+
 
 # Let's prepare emsdk
 if [ -z "$emSdkVersion" ]; then
