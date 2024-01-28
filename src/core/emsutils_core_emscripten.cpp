@@ -26,7 +26,7 @@
 CPPUTILS_BEGIN_C
 
 struct CpputilsFsSyncSClbkData{
-    ::cpputils::emscripten::FsSyncClbk  m_clbk;
+    ::emsutils::FsSyncClbk  m_clbk;
     void*       m_clbkData;
 };
 
