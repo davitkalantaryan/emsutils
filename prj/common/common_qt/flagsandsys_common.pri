@@ -17,17 +17,21 @@ isEmpty(emsutilsFlagsAndSysCommonIncluded){
 
     isEmpty(artifactRoot) {
         artifactRoot = $$(artifactRoot)
-	        isEmpty(artifactRoot) {
-		        artifactRoot = $${emsutilsRepoRoot}
-		}
+        isEmpty(artifactRoot) {
+            artifactRoot = $${emsutilsRepoRoot}
+        }
     }
 
     include("$${emsutilsRepoRoot}/contrib/cinternal/prj/common/common_qt/flagsandsys_common.pri")
 
     INCLUDEPATH += $${emsutilsRepoRoot}/include
 
-    LIBS	+= -L$${emsutilsRepoRoot}/sys/$${CODENAME}/$$CONFIGURATION/lib
-    LIBS	+= -L$${emsutilsRepoRoot}/sys/$${CODENAME}/$$CONFIGURATION/tlib
+    exists($${emsutilsRepoRoot}/sys/$${CODENAME}/$$CONFIGURATION/lib) {
+        LIBS += -L$${cinternalRepoRoot}/sys/$${CODENAME}/$$CONFIGURATION/lib
+    }
+    exists($${emsutilsRepoRoot}/sys/$${CODENAME}/$$CONFIGURATION/tlib) {
+        LIBS += -L$${cinternalRepoRoot}/sys/$${CODENAME}/$$CONFIGURATION/tlib
+    }
 
     OTHER_FILES += $$files($${PWD}/../common_mkfl/*.Makefile,true)
 }
