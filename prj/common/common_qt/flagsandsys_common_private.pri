@@ -12,8 +12,6 @@ message("!!! $${PWD}/flagsandsys_common_private.pri")
 
 isEmpty(emsutilsFlagsAndSysCommonPrivateIncluded){
     emsutilsFlagsAndSysCommonPrivateIncluded = 1
-
-	include("$${PWD}/flagsandsys_common.pri")
-
+    include("$${PWD}/flagsandsys_common.pri")
     INCLUDEPATH += $${emsutilsRepoRoot}/src/include
 }
