@@ -27,10 +27,10 @@ isEmpty(emsutilsFlagsAndSysCommonIncluded){
     INCLUDEPATH += $${emsutilsRepoRoot}/include
 
     exists($${emsutilsRepoRoot}/sys/$${CODENAME}/$$CONFIGURATION/lib) {
-        LIBS += -L$${cinternalRepoRoot}/sys/$${CODENAME}/$$CONFIGURATION/lib
+        LIBS += -L$${emsutilsRepoRoot}/sys/$${CODENAME}/$$CONFIGURATION/lib
     }
     exists($${emsutilsRepoRoot}/sys/$${CODENAME}/$$CONFIGURATION/tlib) {
-        LIBS += -L$${cinternalRepoRoot}/sys/$${CODENAME}/$$CONFIGURATION/tlib
+        LIBS += -L$${emsutilsRepoRoot}/sys/$${CODENAME}/$$CONFIGURATION/tlib
     }
 
     OTHER_FILES += $$files($${PWD}/../common_mkfl/*.Makefile,true)
